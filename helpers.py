@@ -1,4 +1,4 @@
-from types import new_class
+import re
 import bson
 from bson.objectid import ObjectId
 from flask.globals import session
@@ -164,25 +164,94 @@ def unblockStudentInStudyRoom(user_email, user_to_unblock, course_code):
 
     return "Successfully unblocked " + user_to_unblock_name
 
-def reportStudentInStudyRoom(user_to_report_email, course_code):
+def reportStudentInStudyRoom(course_code, user_to_report_email, reported_by_email):
     
-    spam_reports = getStudentInStudyRoom(course_code, user_to_report_email)["spam_reports"]
-    spam_reports = int(spam_reports) + 1
+    user_to_report_name = getStudentDetails(user_to_report_email)["first_name"] +" "+ \
+                          getStudentDetails(user_to_report_email)["last_name"]
+    spam_reports_by = getStudentInStudyRoom(course_code, user_to_report_email).get("spam_reports_by")
+    
+    spam_reports = 0
+    if spam_reports_by is not None:
+        spam_reports = len(spam_reports_by) 
+        
+        if reported_by_email in spam_reports_by:
+            return None, "You have already reported "+user_to_report_name, False
 
-    message = "Stop annoying people or I'll throw you out of here !"
-    # do whatever
-
-    mongo.db.studyrooms.update_many({
+    mongo.db.studyrooms.update_one({
         "course_code": course_code ,
         "students.email": user_to_report_email }, { 
-        "$set": { 
-        "students.$.spam_reports": spam_reports
+        "$push": { "students.$.spam_reports_by" : reported_by_email
             } 
         }, 
         upsert=True
     )
+
+    spam_reports = spam_reports + 1
+    total_students = len(getStudentsInStudyRoom(course_code))
     
-    return message
+    reported_message = user_to_report_name + " has been reported for spamming"
+    
+    if spam_reports == 1 :
+        return "Some of your classmates have reported against you. You are requested not to disturb your \
+                classmates by spamming on this platform. ", reported_message , False
+
+    block_message = "You have been blocked out of the study room for the next 12 hours due to multiplt spam\
+                    reports against you."
+
+    if total_students < 15 :
+        if spam_reports > 1:#total_students*(2/3) :
+            blockFromStudyRoom(course_code, user_to_report_email)
+            return block_message, reported_message, True
+
+    elif total_students < 30 :
+        if spam_reports > total_students*(1/2) :
+            blockFromStudyRoom(course_code, user_to_report_email)
+            return block_message, reported_message, True
+    
+    else :
+        if spam_reports > total_students*(1/3) :
+            blockFromStudyRoom(course_code, user_to_report_email)
+            return block_message, reported_message, True
+
+    return None, reported_message, False
+
+def blockFromStudyRoom(course_code, user_to_report_email):
+    mongo.db.studyrooms.update_one({
+        "course_code": course_code }, { 
+        "$push": {  "students_blocked": {
+            "email":user_to_report_email ,
+            "blocked_at": datetime.now()
+                } 
+            } 
+        }, 
+        upsert=True
+    )
+
+def unblockStudentFromStudyRoom(course_code, user_email):
+    mongo.db.studyrooms.update_one({
+        "course_code": course_code }, { 
+        "$pull": {  "students_blocked": {
+            "email":user_email } 
+            } 
+        }
+    )
+
+def isBlockedFromStudyRoom(course_code, user_email):
+    course_study_room = mongo.db.studyrooms.find_one({ "course_code": course_code })
+    
+    if course_study_room.get("students_blocked") is None :
+        return False, -1
+
+    for blocked_student in course_study_room["students_blocked"]:
+        if blocked_student["email"] == user_email :
+            blocked_for_time = (datetime.now() - blocked_student["blocked_at"]).total_seconds()
+            if blocked_for_time >= 12*60*60:
+                unblockStudentFromStudyRoom(course_code, user_email)
+                return False, -1
+            else:
+                return True, 12*60*60 - blocked_for_time 
+    
+    return False, -1
 
 def updateStudyRoomSessionId(course_code, user_email, sid) :
     mongo.db.studyrooms.update_many({
@@ -309,9 +378,11 @@ def loggedIn():
     return True
 
 def logInStudyRoom(user_email, course_code):    
+
     course = mongo.db.studyrooms.find_one({
         "course_code" : course_code
     })
+
     for student in course["students"]:
         if student["email"] == user_email:
             mongo.db.studyrooms.update_one({
@@ -320,7 +391,7 @@ def logInStudyRoom(user_email, course_code):
                 }, { 
                 "$set": { 
                 "students.$.activity_updated": datetime.now(),
-                "students.$.spam_reports" : 0,
+                "students.$.spam_reports_by" : [],
                 "students.$.sid" : ""     
                 } 
             })
@@ -454,3 +525,14 @@ def validateSignUpCredentials(email):
         return "User with this email ID already exists !"
     
     return True
+
+def getTimeString(time):
+    if time < 60:
+        str_time = str(int(time))+" seconds"
+    elif time < 3600:
+        str_time = str(int(time/60))+" minutes"
+    else :
+        str_time = str(int(time/3600))+" hours"
+        str_time = str_time + ", " +str(int((time%3600)/60)) +" minutes"
+    
+    return str_time

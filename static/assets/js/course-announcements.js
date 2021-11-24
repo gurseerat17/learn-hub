@@ -109,7 +109,7 @@ $(document).ready(function(){
         if(type == "alert"){
             alertIcon = document.getElementById("alert-icon");
             alertIcon.className = "bx bxs-error-circle"
-            alertIcon.style.color = ""
+            alertIcon.style.color = "gold"
         }
 
         if(type == "success"){

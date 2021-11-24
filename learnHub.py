@@ -74,9 +74,8 @@ def course_details(course_code):
     course_details = getCourseDetails(course_code)
     course_announcements = getCourseAnnouncements(course_code)
 
-    return render_template("course-details.html", user_first_name = user['first_name'], 
-                            user = user, course = course_details,
-                            course_announcements = course_announcements)
+    return render_template("course-details.html", user = user, course = course_details,
+                            course_announcements = course_announcements, alert = request.args.get('alert'))
 
 @app.route("/study-room/<course_code>", methods = ["POST", "GET"])
 def study_room(course_code):
@@ -84,12 +83,18 @@ def study_room(course_code):
     if loggedIn() == False:
         return redirect(url_for("login"))
 
+    print(":::::::::::::::::::::::::::", course_code)
     if session['user_email'] not in getCourseDetails(course_code)["id_students"]:
         return redirect(url_for("courses"))
 
     study_room_students = getStudentsInStudyRoom(course_code)
     user = getStudentDetails(session['user_email'])
     
+    is_blocked, time_left = isBlockedFromStudyRoom(course_code, session['user_email'])
+    if  is_blocked == True:
+        return redirect(url_for("course_details", course_code = course_code, alert = 
+                        "You can not log into the study room for the next "+ getTimeString(time_left)))
+
     logInStudyRoom(session['user_email'], course_code)
 
     if user not in study_room_students:
@@ -112,9 +117,7 @@ def study_room(course_code):
 @app.route("/study-room/logout/<course_code>", methods = ["POST", "GET"])
 def study_room_logout(course_code):
 
-    logOutStudyRoom(session['user_email'], course_code)
-    
-    socketio.emit('study room logout', {'course_code': course_code, 'email': session['user_email']} , broadcast=True)
+    study_room_logout_(course_code, session['user_email'])
     return redirect(url_for("course_details", course_code = course_code))
 
 @app.route("/login", methods=["POST","GET"])
@@ -194,17 +197,28 @@ def send_invite(data):
 
 @socketio.on('report user', namespace ='/')
 def report_user(data):
-    print(data)
+    
     course_code = data.get('course_code')
     user_to_report = data.get('to_report')
-    message = reportStudentInStudyRoom(user_to_report, course_code)
+    reported_by = data.get('reported_by')
 
-    user_sid = getStudyRoomSessionId(getStudentDetails(user_to_report), course_code)
+    message, feedback , blocked = reportStudentInStudyRoom(course_code, user_to_report, reported_by)
+   
+    user_to_report_sid = getStudyRoomSessionId(getStudentDetails(user_to_report), course_code)
+    reported_by_sid = getStudyRoomSessionId(getStudentDetails(reported_by), course_code)
 
     room = session.get('room')
     join_room(room)
 
-    emit('reported', {'message': message} , room=user_sid)
+    if blocked == True:
+        emit('log out', room=user_to_report_sid)
+        return 
+
+    if message is not None:
+        emit('reported', {'message': message} , room=user_to_report_sid)
+
+    if feedback is not None:
+        emit('feedback', {'message': feedback} , room=reported_by_sid)
 
 @socketio.on('block or unblock user', namespace ='/')
 def block_user(data):
@@ -326,9 +340,10 @@ def update_study_room_status(data):
     
     updateStudyRoomActivityStatus(data.get('course_code'), data.get('user_email'))
 
-def inactive_study_room_logout(course_code, user_email):
-    
+def study_room_logout_(course_code, user_email):
+    print("LOGGING OUT")
     logOutStudyRoom(user_email, course_code)
+    print("EMIT")
     socketio.emit('study room logout', {'course_code': course_code, 'email': user_email} , broadcast=True)
 
 def checkIdleStudyRoomStudents():
@@ -338,7 +353,7 @@ def checkIdleStudyRoomStudents():
             course_code = course["course_code"]
             for student in course["students"]:
                 if (datetime.now() - (student["activity_updated"])).total_seconds() > 10*60:
-                    inactive_study_room_logout(course_code, student["email"])
+                    study_room_logout(course_code, student["email"])
             
 @app.before_first_request
 def initialize():

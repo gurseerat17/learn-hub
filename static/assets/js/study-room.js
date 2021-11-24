@@ -186,7 +186,10 @@ $(document).ready(function(){
         a1.innerHTML = "Invite to Discuss"
         let li22 = document.createElement("li");
         let a2 = document.createElement("a");
+        a2.setAttribute("name", email);
+        a2.className+="report"
         a2.innerHTML = "Report Spam"
+        let li23 = document.createElement("li");
         let a3 = document.createElement("a");
         a3.setAttribute("name", email);
         a3.className+="block"
@@ -197,15 +200,20 @@ $(document).ready(function(){
         inviteModal.style.display="block";
         }
 
+        a2.onclick = function() {
+            report_user($(this))
+        }
+
         a3.onclick = function() {
             set_blocked($(this))
         }
 
         li21.appendChild(a1);
         li22.appendChild(a2);
-        li22.appendChild(a3);
+        li23.appendChild(a3);
         ul2.appendChild(li21);
         ul2.appendChild(li22);
+        ul2.appendChild(li23);
         li1.appendChild(icon2);
         li1.appendChild(ul2);
         ul1.appendChild(li1);
@@ -266,7 +274,7 @@ $(document).ready(function(){
 
     function report_user(elem){
         to_report = elem.attr('name') 
-        socket.emit('report user', { course_code: course_code, to_report: to_report});
+        socket.emit('report user', { course_code: course_code, to_report: to_report, reported_by : user_email});
     }
 
     $('.invite').click(function(event){
@@ -344,13 +352,13 @@ $(document).ready(function(){
 
         idleTime = idleTime + 1;
 
-        if (idleTime > 30){
+        if (idleTime > 25){
             display_alert(" You have been inactive for the last 30 minutes <br>\
                             Confirm your presence by pressing a key or clicking on the page ... " , "alert")
         }
 
-        if (idleTime > 32) { 
-            window.location.href = "{{url_for('study_room_logout', course_code = course_code )}}";
+        if (idleTime > 30) { 
+            window.location.href = redirect_url_logout;
         }
 
         if(idleTime%10 == 0){
@@ -366,7 +374,7 @@ $(document).ready(function(){
         if(type == "alert"){
             alertIcon = document.getElementById("alert-icon");
             alertIcon.className = "bx bxs-error-circle"
-            alertIcon.style.color = ""
+            alertIcon.style.color = "gold"
         }
 
         if(type == "success"){
@@ -396,6 +404,15 @@ $(document).ready(function(){
 
     socket.on('reported', function(data) {
         display_alert(data["message"], "warning")
+    })
+
+    socket.on('feedback', function(data) {
+        console.log(data["message"])
+        display_alert(data["message"], "success")
+    })
+
+    socket.on('log out', function(data) {
+        window.location.href = redirect_url_logout;
     })
 
     function reload_at_discuss(){
@@ -449,6 +466,7 @@ $(document).ready(function(){
     });
 
     socket.on('study room logout', function(data){
+        console.log("TT")
         let data_course_code = data['course_code'];
         let user_email = data['email'];
         if(data_course_code === course_code){
@@ -460,7 +478,6 @@ $(document).ready(function(){
     socket.on('study room login', function(data){
         
         let data_course_code = data['course_code'];
-        console.log(data["student_email"]," recieived")
         
         if(data_course_code == course_code){
             let student_new = create_new_student(data["student_email"], data["student_first_name"], data["student_last_name"])

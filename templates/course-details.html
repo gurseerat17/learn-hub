@@ -57,7 +57,7 @@
           <!-- <li><a href="index.html">Home</a></li> -->
           <li><a class="active" href="{{url_for('courses')}}">Courses</a></li>
           <!-- <li><a href="comingsoon.html">Calendar</a></li> -->
-          <li class="get-started-btn dropdown"><i class="bx bx-user"></i>&nbsp;&nbsp;{{user_first_name}}<i class="bi"></i>
+          <li class="get-started-btn dropdown"><i class="bx bx-user"></i>&nbsp;&nbsp;{{user["first_name"]}}<i class="bi"></i>
             <ul>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
@@ -166,7 +166,7 @@
     </section><!-- End Cource Details Section -->
 
     <!-- ======= Events Section ======= -->
-    <section id="events" class="events">
+    <section id="events" class="events" style="padding: 30px 0;">
       <div class="container" data-aos="fade-up">
         <div class="row">
           <div class="col-md-6 d-flex align-items-stretch" style="padding: 0% 5%;">
@@ -308,11 +308,34 @@
         </div>
       </div>
     </div>
+
+     <!-- alert -->
+     <div id="popup-alert" class="modal">
+      <div class="modal-content" style="width: max-content;">
+        <div class="modal-body" style="width: max-content;">
+          <!-- <div style="margin-bottom: 15px;">
+            <span class="close" id="suc-close">&times;</span>
+          </div> -->
+          <form style="padding: 10px;" >
+            <table>
+              <tr>
+                <td style="text-align: left;">
+                  <i class="bx bxs-error-circle" style="color : gold; font-size: 50px;"></i>
+                </td>
+                <td style="text-align: center; white-space: nowrap;">
+                  &nbsp;&nbsp;{{alert}}
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
-    <section>
+    <section style="padding-top: 30px;">
       <div style="text-align: left; text-align: center;">
         <nav id="navbar" class="navbar order-last order-lg-0">
           <ul style=" margin-left: auto; margin-right: auto;">
@@ -340,6 +363,19 @@
   <!-- Template Main JS File -->
   <script src="../static/assets/js/main.js"></script>
   <script type="text/javascript" src="../static/assets/js/course-announcements.js"></script>
+  
+  {% if alert %}
+    <script>
+      var alertPopup = document.getElementById("popup-alert");
+      alertPopup.style.display="block"
+      window.onclick = function(event) {
+        if (event.target == alertPopup) {
+          alertPopup.style.display = "none";
+        }
+      }
+    </script>
+  {% endif %}
+  
   <script>
 
     var courseInfoBtn = document.getElementById("course-info-btn");
@@ -367,17 +403,6 @@
     }
     unenroll_no.onclick = function() {
       dropCourseModal.style.display = "none";
-    }
-    
-    addCourseClose.onclick = function() {
-      addCourseModal.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-      if (event.target == addCourseModal) {
-        addCourseModal.style.display = "none";
-      }
-
     }
 
   </script>
