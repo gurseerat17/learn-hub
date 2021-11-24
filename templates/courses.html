@@ -10,7 +10,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/logo.png" rel="icon">
   <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -42,18 +42,17 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">Learn Hub</a></h1>
+      <h1 class="logo me-auto"><a href="{{url_for('home')}}">Learn Hub</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="../static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <!-- <li><a href="index.html">Home</a></li> -->
-          <li><a class="active" href="courses.html">Courses</a></li>
+          <li><a class="active" href="{{url_for('courses')}}">Courses</a></li>
           <!-- <li><a href="comingsoon.html">Calendar</a></li> -->
           <li class="get-started-btn dropdown"><i class="bx bx-user"></i>&nbsp;&nbsp;{{user_first_name}}<i class="bi"></i>
             <ul>
-              <li><a style="color: #37423b;">View Profile</a></li>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
           </li>

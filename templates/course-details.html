@@ -10,7 +10,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/logo.png" rel="icon">
   <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -27,7 +27,13 @@
 
   <!-- Template Main CSS File -->
   <link href="../static/styles/css/style.css" rel="stylesheet">
-
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>  
+  <script>
+    var course_code = '{{course["course_code"]}}';
+    var user_email = '{{user["email"]}}' ;
+  </script>
   <!-- =======================================================
   * Template Name: Mentor - v4.6.1
   * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
@@ -42,18 +48,17 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">Learn Hub</a></h1>
+      <h1 class="logo me-auto"><a href="{{url_for('home')}}">Learn Hub</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="../static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <!-- <li><a href="index.html">Home</a></li> -->
-          <li><a class="active" href="courses.html">Courses</a></li>
+          <li><a class="active" href="{{url_for('courses')}}">Courses</a></li>
           <!-- <li><a href="comingsoon.html">Calendar</a></li> -->
           <li class="get-started-btn dropdown"><i class="bx bx-user"></i>&nbsp;&nbsp;{{user_first_name}}<i class="bi"></i>
             <ul>
-              <li><a style="color: #37423b;">View Profile</a></li>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
           </li>
@@ -170,7 +175,7 @@
                 <img src="../static/assets/img/events-2.jpg" alt="...">
               </div>
               <div class="card-body">
-                <h5 class="card-title"><a href="">Lectures and Assignments</a></h5>
+                <h5 class="card-title"><a>Lectures and Assignments</a></h5>
                 <p class="card-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo</p>
               </div>
             </div>
@@ -192,12 +197,98 @@
       </div>
     </section><!-- End Events Section -->
 
-    <section id="announcements" >
-      <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
-        <h1 style="text-align: center;">Course<br>Announcements</h1> 
+    <div class="section-title" id="discuss" style="padding-left: 8%; padding-right: 8%;">
+      <table style="width: 100%;">
+        <tr>
+          <td>
+            <h2>What's New</h2>
+            <p style="display: inline;">Course Announcements </p>
+          </td>
+          <td>
+            <img style="float: right;" class="auto-vanish" src="/static/assets/img/course-details-tab-1.png" width="33%" >
+          </td>
+        </tr>
+      </table>
+      
+      <div class="row" data-aos="zoom-in" data-aos-delay="100" > 
+        {% for announcement in course_announcements %}
+          <div class="d-flex align-items-stretch">
+            <div class="course-item" style=" width: 100%; border-radius: 8px; border-style: solid; border-color: #d1d0d0; 
+              border-width: 1px; margin: 5% 0 0 10%; padding: 2%;" >
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <table style="width: 100%;">
+                    <tr>
+                      <td>
+                        <p class="name" style="display: inline;">{{announcement["date_posted"]}}</p>
+                        <p class="name" style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;{{announcement["time_posted"]}}</p>
+                      </td>
+                      <td style="text-align: right; font-size: 25px; color: #b8b8b8;">
+                        <i class="bx bxs-minus-circle hide question-minimise" data-announcement='{{announcement["announcement_id"]}}'></i>
+                        <i class="bx bxs-plus-circle question-maximise" data-announcement='{{announcement["announcement_id"]}}'></i>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h3 class="question" >{{announcement["announcement"]}}<s/h3>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div>
+                <div class = "question-replies" data-announcement='{{announcement["announcement_id"]}}'>
+                  {% for comment in announcement["comments"] %}
+                  <div id="discussion-reply">
+                    <hr style=" margin: auto; margin-bottom: 15px; margin-top: 15px; color:#b8b8b8;" >
+                    <div class="trainer d-flex justify-content-between align-items-center" 
+                       style="width: 95%; margin-left: auto; margin-right: auto;">
+                  <div class="trainer-profile d-flex align-items-center">
+                    <table>
+                      <tr>
+                        <td>
+                          <p class="reply-name">{{comment["comment_by"]["name"]}}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="reply">{{comment["comment"]}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                <hr style=" margin: auto; margin-bottom: 15px; margin-top: 15px; color:#b8b8b8;" >
+                <div class="row" style="width: 95%; margin-left: auto; margin-right: auto;">
+                  <table>
+                    <tr>
+                      <td style="width: 90%;">
+                        <div class="form-group" >
+                          <textarea class="form-control" id="reply" rows="1" placeholder="Enter your comment"></textarea>
+                        </div>
+                      </td>
+                      <td style="text-align: right;">
+                        <div class="form-group ">
+                          <button class="btn btn-info text-center" id="post_reply" data-announcement="{{announcement['announcement_id']}}"  
+                            style="color:white; background-color: #3ac162; border: none;"> 
+                            POST
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        
       </div>
-    </section>
-    
+  </div>
     
       <!-- Add Course Modal -->
     <div id="drop-course-modal" class="modal">
@@ -205,7 +296,7 @@
       <!-- Modal content -->
       <div class="modal-content">
         <div class="modal-body">
-          <form style="padding: 10px;" role="form" method="post" action="{{url_for('drop_course', course_code = 'CS101')}}">
+          <form style="padding: 10px;" role="form" method="post" action="{{url_for('drop_course', course_code = course['course_code'])}}">
             <div style="text-align: center;">
               Are you sure you want to drop this course ?
             </div>
@@ -221,7 +312,6 @@
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
-
     <section>
       <div style="text-align: left; text-align: center;">
         <nav id="navbar" class="navbar order-last order-lg-0">
@@ -249,6 +339,7 @@
 
   <!-- Template Main JS File -->
   <script src="../static/assets/js/main.js"></script>
+  <script type="text/javascript" src="../static/assets/js/course-announcements.js"></script>
   <script>
 
     var courseInfoBtn = document.getElementById("course-info-btn");

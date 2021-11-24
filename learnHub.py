@@ -52,7 +52,7 @@ def courses():
                             course_list = user_course_list, warning = request.args.get('warning'), 
                             alert = request.args.get('alert'), success = request.args.get('success'))
 
-@app.route("/course-details/drop/<course_code>", methods=["POST","GET"])
+@app.route("/course--details/drop/<course_code>", methods=["POST","GET"])
 def drop_course(course_code):
     course_dropped, message = dropCourse(session['user_email'], course_code)
     
@@ -67,13 +67,16 @@ def course_details(course_code):
     if loggedIn() == False:
         return redirect(url_for("login"))
 
-    if session['user_email'] not in getCourseDetails(course_code)["id_students"]:
+    user = getStudentDetails(session['user_email'])
+    if user['email'] not in getCourseDetails(course_code)["id_students"]:
         return redirect(url_for("courses"))
 
     course_details = getCourseDetails(course_code)
     course_announcements = getCourseAnnouncements(course_code)
 
-    return render_template("course-details.html", user_first_name = session['user_first_name'], course = course_details, course_announcements = course_announcements)
+    return render_template("course-details.html", user_first_name = user['first_name'], 
+                            user = user, course = course_details,
+                            course_announcements = course_announcements)
 
 @app.route("/study-room/<course_code>", methods = ["POST", "GET"])
 def study_room(course_code):
@@ -296,6 +299,28 @@ def post_question(data):
 def new_login(data):    
     updateStudyRoomSessionId(data.get('course_code'),data.get("user_email"), request.sid) 
 
+@socketio.on('post comment')
+def post_comment(data):
+
+    course_code = data.get('course_code')
+    announcement_id = data.get('announcement_id')
+    comment = data.get('comment')
+    comment_by = getStudentDetails(data.get('comment_by'))  
+
+    if profanityCheck(str(comment)) == True:
+        room = session.get('room')
+        join_room(room)
+        emit('comment blocked' , room=getStudyRoomSessionId(comment_by, course_code))
+        return
+
+
+    comment_by_name = comment_by['first_name']+ " " +comment_by['last_name']
+    addCommentToCourseAnnouncements(course_code, announcement_id, comment, comment_by)
+
+    emit('new comment', {'announcement_id': announcement_id , 'comment':comment, 'comment_by_name': comment_by_name},
+         broadcast=True)
+
+
 @socketio.on('active')
 def update_study_room_status(data):
     
@@ -325,6 +350,7 @@ def initialize():
 @app.template_global(name='zip')
 def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
     return __builtins__.zip(*args, **kwargs)
+
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

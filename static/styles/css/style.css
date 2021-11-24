@@ -1614,3 +1614,9 @@ section {
 a#disabled {
   color: #aaaaaa;
 }
+
+@media (max-width: 800px) {
+  .auto-vanish {
+    display: none;
+  }
+}

@@ -5,6 +5,7 @@ from flask.globals import session
 from learnHub import mongo, study_room
 from profanity_check import predict_prob
 from datetime import datetime
+from dateutil import parser
 
 def addCourseForStudent(user_email, course_code, enrollment_key):
 
@@ -81,6 +82,23 @@ def addReplyToStudyRoomDiscussion(course_code, question_id, reply, replied_by):
     updateStudyRoomChat(course_code, chat)
 
     return new_reply["reply_id"]
+
+def addCommentToCourseAnnouncements(course_code, announcement_id, comment, comment_by):
+     
+    mongo.db.courseannouncements.update_one({
+        "course_code": course_code ,
+        "announcements.announcement_id": announcement_id 
+        }, { 
+        "$push": { "announcements.$.comments": { 
+            "comment_id" : str(bson.objectid.ObjectId()),
+            "comment" : comment,
+            "comment_by" : {
+                "email": comment_by["email"],
+                "name": comment_by["first_name"] +" "+comment_by["last_name"]
+            }
+            } 
+        }
+    }, upsert=True)
 
 def getStudentInStudyRoom(course_code, user_email):
     print(course_code, user_email)
@@ -187,13 +205,23 @@ def courseAvailable(course_code, user_email):
     if course_details is None:
         return False, "Course does not exist !"
 
-    if course_details['no_of_students'] == 35 :
+    if course_details['no_of_students'] == course_details['students_allowed'] :
         return False, "No seats available"
 
     return True, "Course : " + str(course_code) + " is available for enrollment"
 
 def getCourseAnnouncements(course_code):
-    return []
+    announcements = list(mongo.db.courseannouncements.find_one({
+        "course_code" : course_code
+        })["announcements"]
+    )
+    for announcement in announcements:
+        announcement_datetime = announcement["time_posted"].split(' ')
+        time = announcement_datetime[4].split(":")
+        announcement["time_posted"] = time[0]+" : "+time[1]
+        announcement["date_posted"] = announcement_datetime[1]+ " " + announcement_datetime[2]+", "+announcement_datetime[3]
+
+    return announcements
 
 def getCourseDetails(course_code):
     
