@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>{{course_code}} Study Room</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/logo.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+
+  <link href="../static/styles/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>  
+        <script>
+          var course_code = '{{course_code}}';
+          var user_email = '{{user["email"]}}' ;
+        </script>
+</head>
+
+<body>
+
+  
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" style="background: url('../static/assets/img/Added/library.jpg') top center;
+  background-attachment: fixed;
+   background-size: cover;
+   height: 75vh;" 
+   class="justify-content-center align-items-center" > 
+   <div class="row" style="width: 100%; padding-left: 85%;">
+    <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li class="get-started-btn dropdown" style="padding: 10% 30%; font-size: 30px; background-color: white; color: #000;">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <ul>
+              <li><a href="{{url_for('study_room_logout', course_code = course_code )}}">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+    </nav>
+   </div>
+    <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+      <h1 style="font-size: 7vw; text-shadow: 0 0 15px  #080000; line-height: normal;">Study Room </h1>
+      <h1 style="font-size: 6vw; text-shadow: 0 0 15px  #080000; line-height: normal;">{{course_code}}</h1>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+      
+   
+    <!-- ======= Features Section ======= -->
+    
+    <section id="features" class="features" style="margin-top: 5%;">
+        <div class="section-title" style="padding-top: 10px;  padding-left: 8%;">
+            <h2>Learn Together</h2>
+            <p>Classmates Online </p>
+          </div>
+
+        <div class="container " data-aos="fade-up">
+          <!-- {% set colors = ['#ffbb2c', '#5578ff', '#e80368', '#e361ff', '#47aeff', '#ffa76e', '#11dbcf',
+                           '#4233ff','#b2904f', '#b20969', '#ff5828','#29cc61', '#506316', '#f74584', 
+                           '#ebbf10', '#b4f5b0','#d63204','#f5b0de','#04d3d6', '#2446b5', '#24b576'
+                            '#fa4b65', '#cbfa32', '#91967e', '#9da3cc', '#f7a900'] %} -->
+            
+          <div class="row" id="students">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="icon-box">
+                <i class="fa fa-user-circle" style="color: orchid;"></i>
+                <h3><a href="">{{user['first_name']+" "+user['last_name']}}</a></h3>
+              </div>
+            </div> 
+            {% for student in students %}  
+              <div class="col-lg-3 col-md-4 col-sm-6" id ='{{student["email"]}}'>
+                <div class="icon-box">
+                  <i class="fa fa-user-circle"></i>
+                  <h3>{{student['first_name']+" "+student['last_name']}}</h3>
+                  <nav id="navbar" class="navbar order-last order-lg-0">
+                      <ul>
+                        <li class="get-started-btn dropdown" style="background: transparent; font-size: 5px;">
+                          <i class="fa fa-ellipsis-v" style="float: right; "></i>
+                          <ul>
+                            {% if student["email"] in blocked %}
+                            <li><a class = 'invite' id ="disabled" name ='{{student["email"]}}' onclick="return false;">
+                              Invite to Discuss
+                            </a></li>
+                            <li><a class="report"  name ='{{student["email"]}}'>Report Spam</a></li>
+                            <li><a class = 'block'  name ='{{student["email"]}}'>Unblock</a></li>
+                            {% else %}
+                            <li><a class = 'invite'  name ='{{student["email"]}}'>
+                              Invite to Discuss</a></li>
+                            <li><a class="report"  name ='{{student["email"]}}'>Report Spam</a></li>
+                            <li><a class = 'block'  name ='{{student["email"]}}'>Block</a></li>
+                            {% endif %}
+                          </ul>
+                        </li>
+                      </ul>
+                  </nav>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+  
+        </div>
+
+        <div class="section-title" id="discuss" style="padding-top: 5%;  padding-left: 8%;">
+            <h2>Grow Together</h2>
+            <p>Discuss & Brainstorm </p>
+       
+            <div class="row" data-aos="zoom-in" data-aos-delay="100" > 
+              <div class="d-flex align-items-stretch">
+                <div class="course-item" style=" width: 100%; margin: 5% 5% 0 10%;" >
+                  <div class="row" style="width: 95%; margin-left: auto; margin-right: auto;">
+                <div class="add-discussion" id="add-discussion" >
+                        <i class="bx bxs-plus-circle" style="font-size: 40px;  vertical-align: middle;"></i>
+                      Start a discussion
+                </div>
+                  </div>
+                </div>
+              </div>
+              {% for discussion in discussions %}
+                <div class="d-flex align-items-stretch">
+                  <div class="course-item" style=" width: 100%; border-radius: 8px; border-style: solid; border-color: #d1d0d0; 
+                    border-width: 1px; margin: 5% 5% 0 10%; padding: 2%;" >
+                    <div class="course-content">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <table style="width: 100%;">
+                          <tr>
+                            <td>
+                              <p class="name" style="display: inline;">{{discussion["question_by"]["name"]}}</p>
+                            </td>
+                            <td style="text-align: right; font-size: 25px; color: #b8b8b8;">
+                              <i class="bx bxs-minus-circle hide question-minimise" data-question='{{discussion["question_id"]}}'></i>
+                              <i class="bx bxs-plus-circle question-maximise" data-question='{{discussion["question_id"]}}'></i>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <h3 class="question" >{{discussion["question"]}}<s/h3>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div>
+                      <div class = "question-replies" data-question='{{discussion["question_id"]}}'>
+                        {% for reply in discussion["replies"] %}
+                        <div id="discussion-reply">
+                          <hr style=" margin: auto; margin-bottom: 15px; margin-top: 15px; color:#b8b8b8;" >
+                          <div class="trainer d-flex justify-content-between align-items-center" 
+                             style="width: 95%; margin-left: auto; margin-right: auto;">
+                        <div class="trainer-profile d-flex align-items-center">
+                          <table>
+                            <tr>
+                              <td>
+                                <p class="reply-name">{{reply["replied_by"]["name"]}}</p>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <span class="reply">{{reply["reply"]}}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="trainer-rank d-flex align-items-center" >
+                          <table>
+                            <tr>
+                              <td  class="upvote-icon">
+                                {% if user["email"] in reply["upvoted_by"] %}
+                                  <i class="bx bxs-upvote upvote" id='{{reply["reply_id"]}}' data-reply='{{reply["reply_id"]}}' data-question='{{discussion["question_id"]}}'></i>
+                                {% else %}
+                                  <i class="bx bx-upvote upvote" id='{{reply["reply_id"]}}' data-reply='{{reply["reply_id"]}}' data-question='{{discussion["question_id"]}}'></i>
+                                {% endif %}  
+                            </td>
+                              <td class="upvote-num" data-reply='{{reply["reply_id"]}}' data-question='{{discussion["question_id"]}}'>
+                                {{reply["upvotes"]|int}}
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                      <hr style=" margin: auto; margin-bottom: 15px; margin-top: 15px; color:#b8b8b8;" >
+                      <div class="row" style="width: 95%; margin-left: auto; margin-right: auto;">
+                        <table>
+                          <tr>
+                            <td style="width: 90%;">
+                              <div class="form-group" >
+                                <textarea class="form-control" id="reply" rows="1" placeholder="Enter your comment"></textarea>
+                              </div>
+                            </td>
+                            <td style="text-align: right;">
+                              <div class="form-group ">
+                                <button class="btn btn-info text-center" id="post_reply" data-question = "{{discussion['question_id']}}"  
+                                  style="color:white; background-color: #3ac162; border: none;"> 
+                                  POST
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+              
+            </div>
+        </div>
+        
+      </section><!-- End Features Section -->
+
+        <!-- New Question Modal content -->
+        <div id="new-question-modal" class="modal">
+
+        <div class="modal-content">
+          <div class="modal-body">
+            <div style="margin-bottom: 15px;">
+              <span class="close" id="new-question-close">&times;</span>
+            </div>
+            <form style="padding: 10px;" role="form">
+              <div class="form-group" style="margin: 15px 0px;">
+                <textarea class="form-control" id="new-question" rows="4" placeholder="Enter your question"></textarea>
+              </div>
+              <div class="form-group ">
+                <a class="btn btn-info text-center" id="post_question" 
+                  style="color:white; background-color: #3ac162; border: none;"> 
+                  POST
+              </a>
+              </div>
+            </form>
+          </div>
+        </div>
+        </div>
+      <!-- Invite Modal -->
+    <div id="invite-modal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-body">
+            <div style="margin-bottom: 15px;">
+              <span class="close" id="invite-close">&times;</span>
+            </div>
+            <form style="padding: 10px;" role="form" >
+              <div class="form-group" style="margin: 15px 0px;">
+                <label for="meeting-link" style="margin-bottom: 5px;">Meeting Link</label>
+                <input type="text" class="form-control" id="meeting-link" name = "MeetingLink" required>
+              </div>
+              <div class="form-group" style="margin: 15px 0px;">
+                <label for="topic-brief" style="margin-bottom: 5px;">Topic in Brief </label>
+                <input type="text" class="form-control" id="topic-brief" placeholder="Topic of Discussion" name = "TopicBrief" required>
+              </div>
+              <div style="margin-top: 15px; text-align: center;">
+                <a class="get-started-btn" id="send_invite"  style="border: none;">Invite</a>
+                <a class="get-started-btn" id="invite-cancel">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+ 
+    <!-- alert -->
+    <div id="popup-alert" class="modal">
+      <div class="modal-content" style="width: max-content;">
+        <div class="modal-body" style="width: max-content;">
+          <!-- <div style="margin-bottom: 15px;">
+            <span class="close" id="suc-close">&times;</span>
+          </div> -->
+          <form style="padding: 10px;" >
+            <table>
+              <tr>
+                <td style="text-align: left;">
+                  <i class="bx bxs-error-circle" id = "alert-icon" style="color : gold; font-size: 50px;">&nbsp;&nbsp;</i>
+                </td>
+                <td style="text-align: center; white-space: nowrap;" id="alert-message">
+                  {{alert}}
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+ 
+  </main><!-- End #main -->
+
+  <section class="fixed-top" style="padding-top: 2%;" >
+    <div style="text-align: center;" class="hide" id="refresh-discuss">
+      <button id="refresh-discuss-button">View updated stream</button>
+    </div>
+  </section>
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/purecounter/purecounter.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+ 
+   <script type="text/javascript" src="../static/assets/js/study-room.js"></script>
+   
+</body>
+
+</html>

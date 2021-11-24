@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Course Details - Mentor Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../static/styles/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Mentor - v4.6.1
+  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="index.html">Learn Hub</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="../static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <!-- <li><a href="index.html">Home</a></li> -->
+          <li><a class="active" href="courses.html">Courses</a></li>
+          <!-- <li><a href="comingsoon.html">Calendar</a></li> -->
+          <li class="get-started-btn dropdown"><i class="bx bx-user"></i>&nbsp;&nbsp;{{user_first_name}}<i class="bi"></i>
+            <ul>
+              <li><a style="color: #37423b;">View Profile</a></li>
+              <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+
+      </nav><!-- .navbar -->
+      <!-- <a href="courses.html" class="get-started-btn">Get Started</a> -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs" data-aos="fade-in" >
+      <div class="container" style="text-align: left;">
+        <div class="row" style="padding-bottom: 0px;">
+          <div class="col-lg-8" >
+
+            <h2 style="display: inline-block;">{{course['course_name']}}</h2>
+            <p style="padding-top: 10px;">{{course['description']}}
+            </p>
+
+          </div>
+          <div class="col-lg-4" style="text-align: -webkit-right;">
+            <div class="row">
+              <a  href="#" style="display: inline-block;" id="live-class">
+                <button class="btn--link"> 
+                  Join Live Lecture
+                </button>
+              </a>
+          </div>
+          <div class="row"  style="float: right; padding-top: 10px;">
+            <nav id="navbar" class="navbar order-last order-lg-0">
+              <ul>
+                <li class=" dropdown " style="font-size: 35px; ">
+                  <i  class="bx bxs-info-circle" id='course-info-btn'></i>&nbsp;
+                  <ul>
+                    <li><a style="color: black;">View Course Info</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav> 
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Cource Details Section ======= -->
+    <section  id="course-info" style="display: none; padding-right: 5%;" class="course-details">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row" >
+          <div class="col-lg-6" style="display: inline-block;">
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Course Title</h5>
+              <p><a href="#">{{course['course_name']}}</a></p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Course Code</h5>
+              <p>{{course['course_code']}}</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Instructor</h5>
+              <p>{{course['instructor']}}</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Students Enrolled</h5>
+              <p>{{course['no_of_students']|int}}</p>
+            </div>
+
+          </div>
+          <div class="col-lg-6" style="float: right; padding-left: 5%;">
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Course Timings :</h5>
+              <p><a href="#"></a></p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Tuesday</h5>
+              <p>5.00 pm - 7.00 pm</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Wednesday</h5>
+              <p>5.00 pm - 7.00 pm</p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Friday</h5>
+              <p>11.00 am - 12.00 pm</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Cource Details Section -->
+
+    <!-- ======= Events Section ======= -->
+    <section id="events" class="events">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-md-6 d-flex align-items-stretch" style="padding: 0% 5%;">
+            <div class="card">
+              <div class="card-img">
+                <img src="../static/assets/img/events-2.jpg" alt="...">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title"><a href="">Lectures and Assignments</a></h5>
+                <p class="card-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo</p>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-6 d-flex align-items-stretch" style="padding: 0% 5%;">
+            <div class="card">
+              <div class="card-img">
+                <img src="../static/assets/img/Added/study-room.jpg" alt="...">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{url_for('study_room', course_code = course['course_code'])}}">Study Room</a></h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Events Section -->
+
+    <section id="announcements" >
+      <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+        <h1 style="text-align: center;">Course<br>Announcements</h1> 
+      </div>
+    </section>
+    
+    
+      <!-- Add Course Modal -->
+    <div id="drop-course-modal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-body">
+          <form style="padding: 10px;" role="form" method="post" action="{{url_for('drop_course', course_code = 'CS101')}}">
+            <div style="text-align: center;">
+              Are you sure you want to drop this course ?
+            </div>
+            <div style="margin-top: 15px; text-align: center;">
+              <button class="get-started-btn" id='unenroll-yes' type="submit" style="border: none;" >Yes</button>
+              <a class="get-started-btn" id='unenroll-no'>No</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <section>
+      <div style="text-align: left; text-align: center;">
+        <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul style=" margin-left: auto; margin-right: auto;">
+            <li class=" dropdown " style="font-size: 50px; color: #e44c46;"><i class="bx bxs-minus-circle" id='add-course'></i>
+              <ul>
+                <li><a href="#" id="danger">Unenroll</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/purecounter/purecounter.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+  <script>
+
+    var courseInfoBtn = document.getElementById("course-info-btn");
+    var courseInfo = document.getElementById("course-info");
+    
+    var unenroll = document.getElementById("danger");
+    var unenroll_no = document.getElementById("unenroll-no");
+    var dropCourseModal = document.getElementById("drop-course-modal");
+
+    courseInfoBtn.onclick = function() {
+      if(courseInfo.style.display == "none"){
+        courseInfo.style.display = "block";
+        courseInfoBtn.style.opacity=0.7;
+        courseInfoBtn.style.filter = alpha(opacity=40);
+      }
+      if(courseInfo.style.display == "block"){
+        courseInfo.style.display = "none";
+        courseInfoBtn.style.opacity=1.0;
+        courseInfoBtn.style.filter = alpha(opacity=100);
+      }
+    }
+
+    unenroll.onclick = function() {
+      dropCourseModal.style.display = "block";
+    }
+    unenroll_no.onclick = function() {
+      dropCourseModal.style.display = "none";
+    }
+    
+    addCourseClose.onclick = function() {
+      addCourseModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == addCourseModal) {
+        addCourseModal.style.display = "none";
+      }
+
+    }
+
+  </script>
+</body>
+
+</html>

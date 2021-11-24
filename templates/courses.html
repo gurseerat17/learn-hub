@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Courses - Mentor Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../static/assets/img/favicon.png" rel="icon">
+  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../static/styles/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Mentor - v4.6.1
+  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="index.html">Learn Hub</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="../static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <!-- <li><a href="index.html">Home</a></li> -->
+          <li><a class="active" href="courses.html">Courses</a></li>
+          <!-- <li><a href="comingsoon.html">Calendar</a></li> -->
+          <li class="get-started-btn dropdown"><i class="bx bx-user"></i>&nbsp;&nbsp;{{user_first_name}}<i class="bi"></i>
+            <ul>
+              <li><a style="color: #37423b;">View Profile</a></li>
+              <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+
+      </nav><!-- .navbar -->
+      <!-- <a href="courses.html" class="get-started-btn">Get Started</a> -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main" data-aos="fade-in">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+      <div class="container">
+        <h2>Courses</h2>
+        <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Courses Section ======= -->
+    <section id="courses" class="courses">
+      
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Enrolled</h2>
+            <p style="display: inline;">My Courses </p>
+            <!-- <p style="float: right;"> -->
+              <!-- <ul>
+                <li href="#" class="twitter" style="font-size: 50px;"><i class="bx bxs-plus-circle"></i>
+                  <ul>
+                    <li>Add Course</li>
+                  </ul>
+                </li>
+              </ul> -->
+              <nav id="navbar" class="navbar order-last order-lg-0" style="float: right;">
+                <ul>
+                  <li class=" dropdown " style="font-size: 50px; color: #3ac162;"><i class="bx bxs-plus-circle" id='add-course'></i>
+                    <ul>
+                      <li><a style="color: black;">Add Course</a></li>
+                    </ul>
+                  </li>
+                </ul>
+        
+                <i class="bi bi-list mobile-nav-toggle"></i>
+              </nav>
+            <!-- </p> -->
+        </div>
+        
+        
+        <div class="row" data-aos="zoom-in" data-aos-delay="100" >
+
+          {% for course in course_list %}
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+            <div class="course-item">
+              <img src="../static/assets/img/courses/{{course['course_code']}}.jpg" class="img-fluid" alt="...">
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h3><a href="{{url_for('course_details',course_code=course['course_code'])}}">{{course['course_name']}}</a></h3>
+                </div>
+
+                <p class="price">{{course['course_code']}}</p>
+                <!-- <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p> -->
+                <div class="trainer d-flex justify-content-between align-items-center">
+                  <div class="trainer-profile d-flex align-items-center">
+                    <img src="../static/assets/img/trainers/{{course['course_code']}}.jpg" class="img-fluid" alt="">
+                    <span>{{course['instructor']}}</span>
+                  </div>
+                  <div class="trainer-rank d-flex align-items-center">
+                    <i class="bx bx-user"></i>&nbsp;{{course['no_of_students']|int}}
+                    &nbsp;&nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End Course Item-->
+          {% endfor %}
+
+        </div>
+        
+      </div>
+    </section><!-- End Courses Section -->
+
+      <!-- Add Course Modal -->
+    <div id="add-course-modal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-body">
+          <div style="margin-bottom: 15px;">
+            <span class="close" id="add-course-close">&times;</span>
+          </div>
+          <form role = "form" style="padding: 10px;" action="{{ url_for('add_course') }}" method="post" name="add-course" >
+            <div class="form-group" style="margin: 15px 0px;">
+              <label for="courseCode" style="margin-bottom: 5px;">Course Code</label>
+              <input type="text" class="form-control" id="courseCode" name="CourseCode" required>
+            </div>
+            <div class="form-group" style="margin: 15px 0px;">
+              <label for="enrollmentKey" style="margin-bottom: 5px; ">Enrollment Key</label>
+              <input type="password" class="form-control" id="enrollmentKey" name = "EnrollmentKey" >
+              <small>A secret key is provided by the course instructor for enrollment.</small>
+            </div>
+            <div style="margin-top: 15px; text-align: center;">
+              <button class="get-started-btn" style="border: none;" type="submit">Add Course</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- warning -->
+    <div id="popup-warning" class="modal">
+      <div class="modal-content" style="width: max-content;">
+        <div class="modal-body" style="width: max-content;">
+          <form  >
+            <table>
+              <tr>
+                <td style="text-align: left;">
+                  <!-- <i class="bx bxs-user-x" style="color: red; font-size: 50px;"></i> -->
+                  <i class="bx bxs-x-circle" style="color: red; font-size: 50px; "></i>
+                </td>
+                <td style="text-align: center; white-space: nowrap;">
+                  &nbsp;&nbsp;{{warning}}
+                </td>
+              </tr>
+            </table>
+          </form>
+          <!-- <div style="margin-top: 5px; text-align: center;">
+            <button class = "ok" id="warning-close" style="background: gainsboro; border: none; border-radius: 10px; padding: 5px 12px;">OK</span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- alert -->
+    <div id="popup-alert" class="modal">
+      <div class="modal-content" style="width: max-content;">
+        <div class="modal-body" style="width: max-content;">
+          <!-- <div style="margin-bottom: 15px;">
+            <span class="close" id="suc-close">&times;</span>
+          </div> -->
+          <form style="padding: 10px;" >
+            <table>
+              <tr>
+                <td style="text-align: left;">
+                  <i class="bx bxs-error-circle" style="color : gold; font-size: 50px;"></i>
+                </td>
+                <td style="text-align: center; white-space: nowrap;">
+                  &nbsp;&nbsp;{{alert}}
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- success -->
+    <div id="popup-success" class="modal">
+      <div class="modal-content" style="width: max-content;">
+        <div class="modal-body" style="width: max-content;">
+          <!-- <div style="margin-bottom: 15px;">
+            <span class="close" id="suc-close">&times;</span>
+          </div> -->
+          <form style="padding: 10px;" >
+            <table>
+              <tr>
+                <td style="text-align: left;">
+                  <i class="bx bxs-check-circle" style="color: #3ac162; font-size: 50px;"></i>
+                </td>
+                <td style="text-align: center; white-space: nowrap;">
+                  &nbsp;&nbsp;{{success}}
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- End #main -->
+
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/assets/vendor/aos/aos.js"></script>
+  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="../static/assets/vendor/purecounter/purecounter.js"></script>
+  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../static/assets/js/main.js"></script>
+  <script>
+
+    var addCourseBtn = document.getElementById("add-course");
+    var addCourseModal = document.getElementById("add-course-modal");
+    var addCourseClose = document.getElementById("add-course-close");
+    
+    addCourseBtn.onclick = function() {
+      addCourseModal.style.display = "block";
+    }
+
+    addCourseClose.onclick = function() {
+      addCourseModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == addCourseModal) {
+        addCourseModal.style.display = "none";
+      }
+    }
+  </script>
+
+  {% if success %}
+  <script>
+    var successPopup = document.getElementById("popup-success");
+    successPopup.style.display="block"
+    
+    window.onclick = function(event) {
+      if (event.target == successPopup) {
+        successPopup.style.display = "none";
+      }
+    }
+  </script>
+  {% endif %}
+
+  {% if alert %}
+    <script>
+      var alertPopup = document.getElementById("popup-alert");
+      alertPopup.style.display="block"
+      window.onclick = function(event) {
+        if (event.target == alertPopup) {
+          alertPopup.style.display = "none";
+        }
+      }
+    </script>
+  {% endif %}
+
+  {% if warning %}
+    <script>
+      var warningPopup = document.getElementById("popup-warning");
+      warningPopup.style.display="block"
+      window.onclick = function(event) {
+        if (event.target == warningPopup) {
+          warningPopup.style.display = "none";
+        }
+      }
+    </script>
+  {% endif %}
+
+</body>
+
+</html>
