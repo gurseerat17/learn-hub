@@ -54,9 +54,7 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <!-- <li><a href="index.html">Home</a></li> -->
           <li><a class="active" href="{{url_for('courses')}}">Courses</a></li>
-          <!-- <li><a href="comingsoon.html">Calendar</a></li> -->
           <li class="get-started-btn dropdown"><i class="bx bx-user"></i>&nbsp;&nbsp;{{user["first_name"]}}<i class="bi"></i>
             <ul>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
@@ -159,7 +157,8 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title"><a>Lectures and Assignments</a></h5>
-                <p class="card-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo</p>
+                <p class="card-text">This feature is not yet active and shall be implemented soon. You will be able to access the 
+                  lectures, assignments or other course content posted by the instructor from here.</p>
               </div>
             </div>
 
@@ -171,7 +170,8 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title"><a href="{{url_for('study_room', course_code = course['course_code'])}}">Study Room</a></h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
+                <p class="card-text">Log into the study room for {{course['course_name']}} to study with you coursemates. Ask doubts
+                  whenever they arise and help your fellow learners with their queries. Engage, Brainstorm and Learn. </p>
               </div>
             </div>
           </div>
