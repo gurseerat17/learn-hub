@@ -9,6 +9,12 @@ window.onclick = function(event) {
     }
 }
 
+function display_alert(message){
+    alertPopup.style.display="block";
+    alertMessage = document.getElementById("alert-message");
+    alertMessage.innerHTML = message;
+}
+
 for(var i = 0; i < questionMaximiseAll.length; i++) {
     
     let questionMaximise = questionMaximiseAll[i]

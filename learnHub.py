@@ -10,13 +10,11 @@ from helpers import *
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb+srv://engage:engage@learn-hub.hvs2a.mongodb.net/learnHub?retryWrites=true&w=majority"
-# app.config["MONGO_URI"] = "mongodb://localhost:27017/learnHub"
-# client = PyMongo.MongoClient("mongodb+srv://engage:engage@learn-hub.hvs2a.mongodb.net/learnHub?retryWrites=true&w=majority")
-# mongo = client.get_database('learnHub')
 app.config['SECRET_KEY']='well67839to302the094343he38209av320-en'
 
 mongo = PyMongo(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
+
 
 @app.route("/", methods=["POST","GET"])
 def home():
@@ -126,8 +124,7 @@ def study_room_logout(course_code, user_email):
 
     study_room_logout_(course_code, user_email)
 
-    if session.get('user_email') == user_email:
-        return redirect(url_for("course_details", course_code = course_code))
+    return redirect(url_for("course_details", course_code = course_code))
 
 @app.route("/login", methods=["POST","GET"])
 def login():
@@ -339,22 +336,16 @@ def update_study_room_status(data):
 
 def study_room_logout_(course_code, user_email):
     logOutStudyRoom(user_email, course_code)
-    socketio.emit('study room logout', {'course_code': course_code, 'email': user_email} , broadcast=True)
+    socketio.emit('study room logout', {'course_code': course_code, 'email': user_email}, broadcast=True)
 
 def checkIdleStudyRoomStudents():
     study_rooms = getAllStudyRooms()
     for course in study_rooms:
         course_code = course["course_code"]
         for student in course["students"]:
-            if (datetime.now() - (student["activity_updated"])).total_seconds() > 5*60:
-                study_room_logout( course_code = course_code, user_email = student["email"])
+            if (datetime.now() - (student["activity_updated"])).total_seconds() > 15*60:
+                study_room_logout_( course_code = course_code, user_email = student["email"])
             
-# def initialize():
-#     idleCheck = Scheduler()
-#     idleCheck.start()
-
-#     idleCheck.add_interval_job(checkIdleStudyRoomStudents,seconds=2)#10mins
-
 
 @app.template_global(name='zip')
 def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
@@ -363,6 +354,6 @@ def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
 
 if __name__ == "__main__":
     scheduler = APScheduler()
-    scheduler.add_job(func=checkIdleStudyRoomStudents, trigger='interval', id="checkIdle", seconds=5*60)
+    scheduler.add_job(func=checkIdleStudyRoomStudents, trigger='interval', id="checkIdle", seconds=15*60)
     scheduler.start()
     socketio.run(app, debug=True)

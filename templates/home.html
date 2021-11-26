@@ -49,7 +49,7 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="active" href="{{ url_for('home') }}">Home</a></li>
-          <li><a href="{{ url_for('home') }}#about">About</a></li>
+          <li><a href="{{ url_for('home') }}#why-us">About</a></li>
           <li><button class="get-started-btn" id="login-btn" >Login</button></li>
         </ul>
 
@@ -67,33 +67,107 @@
       <h1>Learning Today,<br>Leading Tomorrow</h1>
       <h2>Discover a new way of learning !</h2>
       <a class="btn-get-started" id="signup-btn">Student Sign Up</a>
-      <h2 style="font-size: 12px; margin-top: 2%;">Are you a looking to offer a course on Learn Hub ? <a href="" style="font-weight: 1000;">Click Here</a></h2>
+      <h2 style="font-size: 12px; margin-top: 2%;">Are you a looking to offer a course on Learn Hub ? <a href="{{ url_for('home') }}#for-instructors" style="font-weight: 1000;">Click Here</a></h2>
     </div>
   </section><!-- End Hero -->
 
-  <section id="about" class="about" style="margin-top: 5%;">
+  <!-- ======= Why Us Section ======= -->
+  <section id="why-us" class="why-us">
+    <div class="container" data-aos="fade-up" style="padding-top: 5%;">
+
+      <div class="row">
+        <div class="col-lg-4 d-flex align-items-stretch">
+          <div class="content">
+            <h3>Why Learn Hub?</h3>
+            <p>
+              Allows learns to manage their courses, interact and collaborate on course content and stay connected to their peers and mentors while being physically apart. 
+              <br><br>
+              Explore our exclusive component - the Study Room, which offers a convinient group study setting in a virtual mode.
+            </p>
+            <div class="text-center">
+              <a href="{{ url_for('home') }}#hero" class="more-btn" >Get Started <i class="bx bx-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div class="icon-boxes d-flex flex-column justify-content-center">
+            <div class="row">
+              <div class="col-xl-4 d-flex align-items-stretch">
+                <div class="icon-box mt-4 mt-xl-0">
+                  <i class="bx bx-select-multiple"></i>
+                  <h4>Manage Courses</h4>
+                  <p>Schools and University students can enroll in thier specific courses and use this portal to access course content, important announcements and join live lectures.</p>
+                </div>
+              </div>
+              <div class="col-xl-4 d-flex align-items-stretch">
+                <div class="icon-box mt-4 mt-xl-0">
+                  <i class="bx bx-group"></i>
+                  <h4>Study Room</h4>
+                  <p>An platform which engages students into collaborative studies by allowing them to hold group discussions and one-to-one connects to brainstorm ideas and grow together.  </p>
+                </div>
+              </div>
+              <div class="col-xl-4 d-flex align-items-stretch">
+                <div class="icon-box mt-4 mt-xl-0">
+                  <i class="bx bxs-webcam"></i>
+                  <h4>Moderation</h4>
+                  <p>The study rooms moderate the student comments to ensure that the discussions are held responsibly and provide the option to block and votekick users who may spam the platform.</p>
+                </div>
+              </div>
+            </div>
+          </div><!-- End .content-->
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Why Us Section -->
+
+  <section id="about" class="about">
     <div class="container" data-aos="fade-up">
 
       <div class="row">
-        <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+        <div class="col-lg-5 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
           <img src="../static/assets/img/about.jpg" class="img-fluid" alt="">
         </div>
-        <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-          <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
-          <p class="fst-italic">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua.
-          </p>
-          <ul>
-            <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-            <li><i class="bi bi-check-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-            <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
-          </ul>
-          <p>
-            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          </p>
+        <div class="col-lg-7 pt-4 pt-lg-0 order-2 order-lg-1 content">
+          <h3 style="margin-bottom: 2%;">How can learners make the most out of this e-learning tool ?</h3>
 
+          <ul>
+            <li><i class="bi bi-check-circle"></i> Sign up with you email for free or login in if you have an existing account.</li>
+            <li><i class="bi bi-check-circle"></i> You may then add courses with the help of a unique Enrollment Key which the course instructor 
+              shall provide you with. Each course has a dedicated course page is a place all the content posted by the instructor and allows you  to comment 
+              on the announcements posted.</li>
+            <li><i class="bi bi-check-circle"></i> The course page takes you to our prominent feature, the course study room, an attempt to provide students with a group study environment similar to physical study rooms and group discussions.
+              </li>
+              <li><i class="bi bi-check-circle"></i>      Here you will be able to see your peers who are also logged into the course's study room, post your doubts, reply on questions by your fellow learners and upvote their replies. Furthermore, you may invite any of the your coursemates online for a discussion over a video call.  </li>
+              </li>
+              <li><i class="bi bi-check-circle"></i> The replies sent by the learners in the study room are analysed before sending and the use of offensive words and language are prohibited. Incase a coursemate tries to spam you with meeting invites, you will be given to block them and report them.
+                Multiple spam reports against a particular user would log them out of the study room and they shall not be allowed to re-enter for some hours.</li>
+          </ul>
+          <p class="fst-italic">
+            The objective of this product is to encourage and enable students to interact, engage and brainstorm to promote our ideology of "Learn together, Grow together"  
+          </p>
         </div>
+        
+      </div>
+
+    </div>
+  </section><!-- End About Section -->
+
+  <section id="for-instructors" class="about">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row">
+        <div class="col-lg-12 pt-4 pt-lg-0 order-2 order-lg-1 content">
+          <h3 style="margin-bottom: 2%;">How can instructors use Learn Hub ?</h3>
+
+          <p>
+            Learn Hub can be used by Schools and Universities, Coaching Centers as well as Indiviual Instructors who wish to offer a
+             course to their students. If you are an instructor looking for the same, kindly reach out to use at
+              <a href="mailto:gurseerat17@gmail.com">learn.hub@engage.com</a> and we'll help you set up your course and your students would be
+               able to enroll using a unique enrollment key which you may share with them.  
+          </p>
+        </div>
+        
       </div>
 
     </div>
@@ -228,13 +302,6 @@
         <div class="copyright">
           &copy; Copyright <a href="https://bootstrapmade.com/">BootstrapMade</a>
         </div>
-      </div>
-      <div class="social-links text-center text-md-right pt-3 pt-md-0" style="align-self: flex-end;">
-        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
       </div>
     </div>
   </footer><!-- End Footer -->

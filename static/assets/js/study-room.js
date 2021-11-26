@@ -373,7 +373,7 @@ $(document).ready(function(){
             window.location.href = redirect_url_logout;
         }
 
-        if(activity_update_time == 5){
+        if(activity_update_time == 15){
             activity_update_time = 0
             socket.emit('active', {course_code:course_code, user_email:user_email} )
         }
@@ -408,8 +408,12 @@ $(document).ready(function(){
 
     socket.on('invitation', function(data) {
         console.log("invitation")
-        display_alert(data["inviter"] + " invited you for a dicussion on " + data["topic"] + "<br>"
-        + "<a href='"+data["meeting_link"]+"'>Click here to join</a>", "alert")
+        meeting_link = data["meeting_link"];
+        if (meeting_link.substring(0, 4) != "http"){
+            meeting_link = "https://".concat(meeting_link)
+        }
+        display_alert(data["inviter"] + " invited you for a dicussion on <b>" + data["topic"] +"</b>" 
+        + "<br> <a href='"+meeting_link+"'>Click here to join</a>", "alert")
     });
     
     socket.on('user blocked', function(data) {

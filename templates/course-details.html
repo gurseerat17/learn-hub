@@ -86,7 +86,7 @@
           <div class="col-lg-4" style="text-align: -webkit-right;">
             <div class="row">
               <a  href="#" style="display: inline-block;" id="live-class">
-                <button class="btn--link"> 
+                <button class="btn--link" onclick="display_alert('No live lecture going on')"> 
                   Join Live Lecture
                 </button>
               </a>
@@ -122,41 +122,24 @@
             </div>
 
             <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Instructor</h5>
+              <p>{{course['instructor']}}</p>
+            </div>
+
+            
+
+          </div>
+          <div class="col-lg-6" style="float: right; padding-left: 5%;">
+
+
+            <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Code</h5>
               <p>{{course['course_code']}}</p>
             </div>
 
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Instructor</h5>
-              <p>{{course['instructor']}}</p>
-            </div>
-
-            <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Students Enrolled</h5>
               <p>{{course['no_of_students']|int}}</p>
-            </div>
-
-          </div>
-          <div class="col-lg-6" style="float: right; padding-left: 5%;">
-
-            <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Course Timings :</h5>
-              <p><a href="#"></a></p>
-            </div>
-
-            <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Tuesday</h5>
-              <p>5.00 pm - 7.00 pm</p>
-            </div>
-
-            <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Wednesday</h5>
-              <p>5.00 pm - 7.00 pm</p>
-            </div>
-
-            <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Friday</h5>
-              <p>11.00 am - 12.00 pm</p>
             </div>
 
           </div>
@@ -312,8 +295,8 @@
 
      <!-- alert -->
      <div id="popup-alert" class="modal">
-      <div class="modal-content" style="width: max-content;">
-        <div class="modal-body" style="width: max-content;">
+      <div class="alert-modal-content">
+        <div class="modal-body">
           <!-- <div style="margin-bottom: 15px;">
             <span class="close" id="suc-close">&times;</span>
           </div> -->

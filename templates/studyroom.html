@@ -74,7 +74,7 @@
     <section id="features" class="features" style="margin-top: 5%;">
         <div class="section-title" style="padding-top: 10px;  padding-left: 8%;">
             <h2>Learn Together</h2>
-            <p>Classmates Online </p>
+            <p>coursemates Online </p>
           </div>
 
         <div class="container " data-aos="fade-up">
@@ -124,20 +124,21 @@
         </div>
 
         <div class="section-title" id="discuss" style="padding-top: 5%;  padding-left: 8%;">
-            <h2>Grow Together</h2>
-            <p>Discuss & Brainstorm </p>
-       
-            <div class="row" data-aos="zoom-in" data-aos-delay="100" > 
-              <div class="d-flex align-items-stretch">
-                <div class="course-item" style=" width: 100%; margin: 5% 5% 0 10%;" >
-                  <div class="row" style="width: 95%; margin-left: auto; margin-right: auto;">
-                <div class="add-discussion" id="add-discussion" >
-                        <i class="bx bxs-plus-circle" style="font-size: 40px;  vertical-align: middle;"></i>
-                      Start a discussion
-                </div>
+            <table style="width: 95%" >
+              <tr>
+                <td>
+                  <h2>Grow Together</h2>
+                  <p>Discuss & Brainstorm </p>
+                </td>
+                <td style="text-align: -webkit-right;">
+                  <div class="add-discussion" id="add-discussion" >
+                    <i class="bx bxs-plus-circle" style="font-size: 40px;  vertical-align: middle;"></i>
+                  Start a discussion
                   </div>
-                </div>
-              </div>
+                </td>
+              </tr>
+            </table>
+            <div class="row" data-aos="zoom-in" data-aos-delay="100" > 
               {% for discussion in discussions %}
                 <div class="d-flex align-items-stretch">
                   <div class="course-item" style=" width: 100%; border-radius: 8px; border-style: solid; border-color: #d1d0d0; 
@@ -286,8 +287,8 @@
  
     <!-- alert -->
     <div id="popup-alert" class="modal">
-      <div class="modal-content" style="width: max-content;">
-        <div class="modal-body" style="width: max-content;">
+      <div class="alert-modal-content">
+        <div class="modal-body">
           <!-- <div style="margin-bottom: 15px;">
             <span class="close" id="suc-close">&times;</span>
           </div> -->

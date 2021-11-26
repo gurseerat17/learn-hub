@@ -187,8 +187,8 @@ def reportStudentInStudyRoom(course_code, user_to_report_email, reported_by_emai
     reported_message = user_to_report_name + " has been reported for spamming"
     
     if spam_reports == 1 :
-        return "Some of your classmates have reported against you. You are requested not to disturb your \
-                classmates by spamming on this platform. ", reported_message , False
+        return "Some of your coursemates have reported against you. You are requested not to disturb \
+                fellow learners by spamming on this platform. ", reported_message , False
 
     block_message = "You have been blocked out of the study room for the next 12 hours due to multiple spam\
                     reports against you."
