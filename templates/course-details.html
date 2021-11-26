@@ -224,8 +224,8 @@
                         <p class="name" style="display: inline;">&nbsp;&nbsp;&nbsp;&nbsp;{{announcement["time_posted"]}}</p>
                       </td>
                       <td style="text-align: right; font-size: 25px; color: #b8b8b8;">
-                        <i class="bx bxs-minus-circle hide question-minimise" data-announcement='{{announcement["announcement_id"]}}'></i>
-                        <i class="bx bxs-plus-circle question-maximise" data-announcement='{{announcement["announcement_id"]}}'></i>
+                        <i class="bx bxs-up-arrow hide question-minimise" data-announcement='{{announcement["announcement_id"]}}'></i>
+                        <i class="bx bxs-down-arrow question-maximise" data-announcement='{{announcement["announcement_id"]}}'></i>
                       </td>
                     </tr>
                     <tr>
@@ -266,12 +266,13 @@
                     <tr>
                       <td style="width: 90%;">
                         <div class="form-group" >
-                          <textarea class="form-control" id="reply" rows="1" placeholder="Enter your comment"></textarea>
+                          <textarea class="form-control" id="comment" data-announcement="{{announcement['announcement_id']}}"  
+                          rows="1" placeholder="Enter your comment"></textarea>
                         </div>
                       </td>
                       <td style="text-align: right;">
                         <div class="form-group ">
-                          <button class="btn btn-info text-center" id="post_reply" data-announcement="{{announcement['announcement_id']}}"  
+                          <button class="btn btn-info text-center post_comment" data-announcement="{{announcement['announcement_id']}}"  
                             style="color:white; background-color: #3ac162; border: none;"> 
                             POST
                           </button>
@@ -320,10 +321,10 @@
             <table>
               <tr>
                 <td style="text-align: left;">
-                  <i class="bx bxs-error-circle" style="color : gold; font-size: 50px;"></i>
+                  <i class="bx bxs-error-circle" id = "alert-icon" style="color : gold; font-size: 50px;">&nbsp;&nbsp;</i>
                 </td>
-                <td style="text-align: center; white-space: nowrap;">
-                  &nbsp;&nbsp;{{alert}}
+                <td style="text-align: center; white-space: nowrap;" id="alert-message">
+                  {{alert}}
                 </td>
               </tr>
             </table>
@@ -335,18 +336,11 @@
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
-    <section style="padding-top: 30px;">
-      <div style="text-align: left; text-align: center;">
-        <nav id="navbar" class="navbar order-last order-lg-0">
-          <ul style=" margin-left: auto; margin-right: auto;">
-            <li class=" dropdown " style="font-size: 50px; color: #e44c46;"><i class="bx bxs-minus-circle" id='add-course'></i>
-              <ul>
-                <li><a href="#" id="danger">Unenroll</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <section style="padding: 30px; text-align: center;"> 
+      <button style="font-size: 16px; color: white; background-color: #e44c46; border: none; 
+                    border-radius: 80px; padding: 0 10px; " id="danger">
+        <i class="bx bxs-minus-circle" id='add-course' style="padding: 5px;"></i>Unenroll
+      </button>
     </section>
   </footer><!-- End Footer -->
 

@@ -49,7 +49,7 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="active" href="{{ url_for('home') }}">Home</a></li>
-          <li><a href="aboutOpen.html">About</a></li>
+          <li><a href="{{ url_for('home') }}#about">About</a></li>
           <li><button class="get-started-btn" id="login-btn" >Login</button></li>
         </ul>
 
@@ -61,13 +61,43 @@
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex justify-content-center align-items-center"
-  style=" background: url('../static/assets/img/Added/let-us-study.jpg') top center;background-attachment: fixed; background-size: cover;">
+  style=" background: url('../static/assets/img/Added/let-us-study.jpg') top center;background-attachment: fixed;
+         background-size: cover; height: 90vh;">
     <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
       <h1>Learning Today,<br>Leading Tomorrow</h1>
       <h2>Discover a new way of learning !</h2>
-      <a class="btn-get-started" id="signup-btn">Sign Up Now</a>
+      <a class="btn-get-started" id="signup-btn">Student Sign Up</a>
+      <h2 style="font-size: 12px; margin-top: 2%;">Are you a looking to offer a course on Learn Hub ? <a href="" style="font-weight: 1000;">Click Here</a></h2>
     </div>
   </section><!-- End Hero -->
+
+  <section id="about" class="about" style="margin-top: 5%;">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row">
+        <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+          <img src="../static/assets/img/about.jpg" class="img-fluid" alt="">
+        </div>
+        <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+          <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+          <p class="fst-italic">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua.
+          </p>
+          <ul>
+            <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+            <li><i class="bi bi-check-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+            <li><i class="bi bi-check-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
+          </ul>
+          <p>
+            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End About Section -->
 
   <main id="main">
     <!-- Login Modal -->
@@ -158,20 +188,20 @@
               <div class="col">
                 <div class="form-group" style="margin: 15px 0px;">
                   <label for="signup-first-name">First Name</label>
-                  <input type="text" class="form-control" id="signup-first-name" name="SignUpFirstName" placeholder="First name" required>
+                  <input type="text" class="form-control" id="signup-first-name" name="SignUpFirstName"  required>
                 </div>
               </div>
               <div class="col">
                 <div class="form-group" style="margin: 15px 0px;">
                   <label for="signup-last-name">Last Name</label>
-                  <input type="text" class="form-control" id="signup-last-name" name="SignUpLastName" placeholder="Last name" required>
+                  <input type="text" class="form-control" id="signup-last-name" name="SignUpLastName"   required>
                 </div>
               </div>
             </div>
             <div class="row" style="padding: 0px 12px;">
                 <div class="form-group" style="margin: 15px 0px;">
                   <label for="signup-email">Email Address</label>
-                  <input type="text" class="form-control" id="signup-email" name="SignUpEmail" placeholder="Enter e-mail" required>
+                  <input type="email" class="form-control" id="signup-email" name="SignUpEmail" placeholder="Enter your e-mail" required>
                 </div>
             </div>
             <div class="row" style="padding: 0px 12px;">
@@ -179,17 +209,7 @@
                 <label for="signup-password">Password </label>
                 <input type="password" class="form-control" id="signup-password" name="SignUpPassword" placeholder="Set a password" required>
               </div>
-            </div>
-            <div style="text-align: center; padding: 10px 12px;">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="UserRole" id="signup-student" value="student">
-                <label class="form-check-label" for="signup-user-role">Student</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="UserRole" id="signup-teacher" value="teacher" disabled>
-                <label class="form-check-label" for="signup-user-role">Teacher</label>
-              </div>
-            </div>
+            </div> 
             <div style="margin-top: 15px; text-align: center;">
               <button class="get-started-btn" id="login-btn" type="submit" style="border:none">Submit</button>
             </div>

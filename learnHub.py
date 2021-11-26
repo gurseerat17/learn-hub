@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask_apscheduler import APScheduler
 from flask.globals import session
 from flask.helpers import url_for
 from werkzeug.utils import redirect
@@ -6,10 +7,12 @@ from flask_socketio import SocketIO, emit, join_room
 from flask_pymongo import PyMongo
 from flask import request, Flask
 from helpers import *
-from apscheduler.scheduler import Scheduler
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/learnHub"
+app.config["MONGO_URI"] = "mongodb+srv://engage:engage@learn-hub.hvs2a.mongodb.net/learnHub?retryWrites=true&w=majority"
+# app.config["MONGO_URI"] = "mongodb://localhost:27017/learnHub"
+# client = PyMongo.MongoClient("mongodb+srv://engage:engage@learn-hub.hvs2a.mongodb.net/learnHub?retryWrites=true&w=majority")
+# mongo = client.get_database('learnHub')
 app.config['SECRET_KEY']='well67839to302the094343he38209av320-en'
 
 mongo = PyMongo(app)
@@ -73,6 +76,7 @@ def course_details(course_code):
 
     course_details = getCourseDetails(course_code)
     course_announcements = getCourseAnnouncements(course_code)
+    course_announcements.reverse()
 
     return render_template("course-details.html", user = user, course = course_details,
                             course_announcements = course_announcements, alert = request.args.get('alert'))
@@ -83,7 +87,6 @@ def study_room(course_code):
     if loggedIn() == False:
         return redirect(url_for("login"))
 
-    print(":::::::::::::::::::::::::::", course_code)
     if session['user_email'] not in getCourseDetails(course_code)["id_students"]:
         return redirect(url_for("courses"))
 
@@ -114,11 +117,17 @@ def study_room(course_code):
                             warning = request.args.get('warning'), success= request.args.get('success'), 
                             alert = request.args.get('alert') )
 
-@app.route("/study-room/logout/<course_code>", methods = ["POST", "GET"])
-def study_room_logout(course_code):
+@app.route("/study-room/logout/<course_code>/<user_email>", methods = ["POST", "GET"])
+def study_room_logout(course_code, user_email):
+    
+    # user_email = request.args.get('user_email')
+    if user_email is None:
+        user_email = session["user_email"]
 
-    study_room_logout_(course_code, session['user_email'])
-    return redirect(url_for("course_details", course_code = course_code))
+    study_room_logout_(course_code, user_email)
+
+    if session.get('user_email') == user_email:
+        return redirect(url_for("course_details", course_code = course_code))
 
 @app.route("/login", methods=["POST","GET"])
 def login():
@@ -147,18 +156,13 @@ def signUp():
         password = request.form.get("SignUpPassword")
         first_name = request.form.get("SignUpFirstName")
         last_name = request.form.get("SignUpLastName")
-        user_role = request.form.get("UserRole")
 
         if validateSignUpCredentials(email) == True:
             
-            if(user_role=="student"):
-                addNewStudent(email, password, first_name, last_name)
-                validateCredentialsAndLogin(email, password, session) # Logging In the new user
-                return redirect(url_for("courses", user_email = session['user_email']))
+            addNewStudent(email, password, first_name, last_name)
+            validateCredentialsAndLogin(email, password, session) # Logging In the new user
+            return redirect(url_for("courses", user_email = session['user_email']))
 
-            elif(user_role=="teacher"):
-                addNewTeacher(email, password, first_name, last_name)
-                return render_template("home.html")
         
         else :
             return redirect(url_for("home", warning = validateSignUpCredentials(email)))
@@ -321,13 +325,6 @@ def post_comment(data):
     comment = data.get('comment')
     comment_by = getStudentDetails(data.get('comment_by'))  
 
-    if profanityCheck(str(comment)) == True:
-        room = session.get('room')
-        join_room(room)
-        emit('comment blocked' , room=getStudyRoomSessionId(comment_by, course_code))
-        return
-
-
     comment_by_name = comment_by['first_name']+ " " +comment_by['last_name']
     addCommentToCourseAnnouncements(course_code, announcement_id, comment, comment_by)
 
@@ -341,26 +338,23 @@ def update_study_room_status(data):
     updateStudyRoomActivityStatus(data.get('course_code'), data.get('user_email'))
 
 def study_room_logout_(course_code, user_email):
-    print("LOGGING OUT")
     logOutStudyRoom(user_email, course_code)
-    print("EMIT")
     socketio.emit('study room logout', {'course_code': course_code, 'email': user_email} , broadcast=True)
 
 def checkIdleStudyRoomStudents():
-    with app.app_context():
-        study_rooms = getAllStudyRooms()
-        for course in study_rooms:
-            course_code = course["course_code"]
-            for student in course["students"]:
-                if (datetime.now() - (student["activity_updated"])).total_seconds() > 10*60:
-                    study_room_logout(course_code, student["email"])
+    study_rooms = getAllStudyRooms()
+    for course in study_rooms:
+        course_code = course["course_code"]
+        for student in course["students"]:
+            if (datetime.now() - (student["activity_updated"])).total_seconds() > 5*60:
+                study_room_logout( course_code = course_code, user_email = student["email"])
             
-@app.before_first_request
-def initialize():
-    idleCheck = Scheduler()
-    idleCheck.start()
+# def initialize():
+#     idleCheck = Scheduler()
+#     idleCheck.start()
 
-    idleCheck.add_interval_job(checkIdleStudyRoomStudents,seconds=10*60)#10mins
+#     idleCheck.add_interval_job(checkIdleStudyRoomStudents,seconds=2)#10mins
+
 
 @app.template_global(name='zip')
 def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
@@ -368,4 +362,7 @@ def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
 
 
 if __name__ == "__main__":
+    scheduler = APScheduler()
+    scheduler.add_job(func=checkIdleStudyRoomStudents, trigger='interval', id="checkIdle", seconds=5*60)
+    scheduler.start()
     socketio.run(app, debug=True)

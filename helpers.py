@@ -36,9 +36,6 @@ def addNewStudent(email, password, first_name, last_name):
         "status"     : "offline"  
     })
 
-def addNewTeacher(email, password, first_name, last_name):
-    return False
-
 def addQuestionToStudyRoomDiscussion(course_code, question, question_by):
         
     new_question = {
@@ -101,11 +98,9 @@ def addCommentToCourseAnnouncements(course_code, announcement_id, comment, comme
     }, upsert=True)
 
 def getStudentInStudyRoom(course_code, user_email):
-    print(course_code, user_email)
     course_students = mongo.db.studyrooms.find_one({
         "course_code": course_code,
     })["students"]
-    print(course_students)
 
     return next((student for student in course_students if student["email"] == user_email), None)
 
@@ -195,11 +190,13 @@ def reportStudentInStudyRoom(course_code, user_to_report_email, reported_by_emai
         return "Some of your classmates have reported against you. You are requested not to disturb your \
                 classmates by spamming on this platform. ", reported_message , False
 
-    block_message = "You have been blocked out of the study room for the next 12 hours due to multiplt spam\
+    block_message = "You have been blocked out of the study room for the next 12 hours due to multiple spam\
                     reports against you."
-
-    if total_students < 15 :
-        if spam_reports > 1:#total_students*(2/3) :
+ 
+    if total_students < 5 :
+        return None, None, False  
+    elif total_students < 15 :
+        if spam_reports > total_students*(2/3) :
             blockFromStudyRoom(course_code, user_to_report_email)
             return block_message, reported_message, True
 
@@ -208,7 +205,7 @@ def reportStudentInStudyRoom(course_code, user_to_report_email, reported_by_emai
             blockFromStudyRoom(course_code, user_to_report_email)
             return block_message, reported_message, True
     
-    else :
+    else : 
         if spam_reports > total_students*(1/3) :
             blockFromStudyRoom(course_code, user_to_report_email)
             return block_message, reported_message, True
@@ -245,11 +242,11 @@ def isBlockedFromStudyRoom(course_code, user_email):
     for blocked_student in course_study_room["students_blocked"]:
         if blocked_student["email"] == user_email :
             blocked_for_time = (datetime.now() - blocked_student["blocked_at"]).total_seconds()
-            if blocked_for_time >= 12*60*60:
+            if blocked_for_time >= 6*60*60:
                 unblockStudentFromStudyRoom(course_code, user_email)
                 return False, -1
             else:
-                return True, 12*60*60 - blocked_for_time 
+                return True, 6*60*60 - blocked_for_time 
     
     return False, -1
 
@@ -297,7 +294,6 @@ def getCourseDetails(course_code):
     course = mongo.db.courses.find_one({
         "course_code" : course_code
     })
-    print(course)
     instructor = getInstructorDetails(ObjectId(course['instructor_id']))
     course['instructor'] = instructor['first_name'] + " " + instructor['last_name']
 
