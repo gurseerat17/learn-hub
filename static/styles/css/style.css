@@ -1448,6 +1448,13 @@ section {
     width: 300px;
   }
 }
+
+@media (max-width: 800px) {
+  .modal-content {
+    width: 70%;
+  }
+}
+
 /* Add Animation */
 @-webkit-keyframes animatetop {
   from {top:-300px; opacity:0} 

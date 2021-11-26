@@ -1,6 +1,13 @@
-var commentTextArea = document.getElementById("reply")
 var questionMinimiseAll = document.getElementsByClassName("question-minimise") 
 var questionMaximiseAll = document.getElementsByClassName("question-maximise") 
+var post_comment_buttons = document.getElementsByClassName("post_comment")
+var alertPopup = document.getElementById("popup-alert");
+
+window.onclick = function(event) {
+    if (event.target == alertPopup) {
+    alertPopup.style.display = "none";
+    }
+}
 
 for(var i = 0; i < questionMaximiseAll.length; i++) {
     
@@ -137,30 +144,26 @@ $(document).ready(function(){
         }    
     }
   
-    
-    $('#post_reply').click(function(event){
-        let elem = $(this);
-        let announcement_id = elem.attr('data-announcement')
-        console.log(announcement_id)
-        let comment = $('#reply').val();
-        let comment_by = user_email
+    for (let i = 0; i < post_comment_buttons.length; i++) {
         
-        if(comment.length == 0) return;
-        
-        socket.emit('post comment', {course_code : course_code, announcement_id: announcement_id, comment: comment,
-                    comment_by: comment_by});
-        commentTextArea.value = ""
-    })
+        post_comment_buttons[i].onclick = function(){    
+            elem = $(this)
+            let announcement_id = elem.attr('data-announcement')
+            let commentTextArea = document.querySelector('[id="comment"][data-announcement="'+ announcement_id.toString() +'"]')
+            let comment = commentTextArea.value
+            let comment_by = user_email
+
+            if(comment.length == 0) return;
+            
+            socket.emit('post comment', {course_code : course_code, announcement_id: announcement_id, comment: comment,
+            comment_by: comment_by});
+            commentTextArea.value = ""
+        }
+    }
    
  
     socket.on('new comment', function(data){
         add_comment_to_announcements(data['announcement_id'], data['comment'], data['comment_by_name']);
     });
- 
-
-    socket.on('comment blocked', function(data){
-        display_alert("Your comment might be disrespectful to the users.<br> Kindly note that you need to maintain the\
-                     decorum of this educational platform", "alert")
-    }); 
     
 });
