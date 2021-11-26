@@ -1,1 +1,1 @@
-web: gunicorn --bind 0.0.0.0:$PORT flaskapp:app
+web: gunicorn — worker-class eventlet -w 1 learnHub:app
