@@ -60,7 +60,7 @@ MongoDB has been used as the database for learn-hub and hosted using MongoDB Atl
   
   Hostname : `learn-hub.hvs2a.mongodb.net`
 
-  Authenication : Username/Password
-  Username : `engage`
-  Password : `engage`
+  Authenication : Username/Password\\
+  Username : `engage`\\
+  Password : `engage`\\
   
