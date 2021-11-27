@@ -34,7 +34,7 @@
         <script>
           var course_code = '{{course_code}}';
           var user_email = '{{user["email"]}}' ;
-          var redirect_url_logout = "{{url_for('study_room_logout', course_code = course_code , user_email = user['email'])}}";
+          var redirect_url_logout = "{{url_for('study_room_logout', course_code = course_code )}}";
         </script>
 </head>
 
@@ -51,9 +51,7 @@
     <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li class="get-started-btn dropdown" style="padding: 10% 30%; font-size: 30px; background-color: white; color: #000;">
-            <a href="{{url_for('study_room_logout', course_code = course_code, user_email = user['email'])}}">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
-            </a>
             <ul>
               <li><a href="{{url_for('study_room_logout', course_code = course_code, user_email = user['email'])}}">Logout</a></li>
             </ul>

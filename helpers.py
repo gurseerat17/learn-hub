@@ -294,6 +294,9 @@ def getCourseDetails(course_code):
     course = mongo.db.courses.find_one({
         "course_code" : course_code
     })
+    if course is None:
+        return course
+        
     instructor = getInstructorDetails(ObjectId(course['instructor_id']))
     course['instructor'] = instructor['first_name'] + " " + instructor['last_name']
 

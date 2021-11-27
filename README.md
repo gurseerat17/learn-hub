@@ -18,33 +18,41 @@ Refer to the below mentioned steps to run the application :
 * Create a virtual environment and install dependencies:
   #### Bash on Linux Systems
   ```
-  python3 -m venv .venv
+  python3.6 -m venv .venv
   source .venv/bin/activate
   pip install -r requirements.txt
   ```
   #### Git Bash on Windows Systems
   ```
-  py -3 -m venv .venv
+  py -3.6 -m venv .venv
   source .venv\\scripts\\activate
   pip install -r requirements.txt
   ```
   #### Powershell / Cmd
   ```
-  py -3 -m venv .venv
+  py -3.6 -m venv .venv
   .venv\scripts\activate
   pip install -r requirements.txt
   ```
 * Run the development server:
+  #### Windows Systems
   ```
-  python3 learnHub.py
+  py -3.6 learnHub.py
   ```
+  #### Linux Systems
+  ```
+  python3.6 learnHub.py
+  ```
+
   Ignore the time zone related warnings and you should see something similar to :
   ```
   wsgi starting up on http://127.0.0.1:5000
   ```
-  Visit the link and enjoy Learn Hub !
+  Visit the link and enjoy Learn Hub ! Refer to `/resources/students.md` to login existing users.
 
   You may quit the server by pressing (Ctrl + C)
+
+__Note__ : In case you are running the development server at any other port number, you will need to update the same in `/static/js/study-room.js/ line 81`  and  `/static/js/course-announcements.js/ line 39`
 <br /><br />
 # Database (MongoDB)
 <br />

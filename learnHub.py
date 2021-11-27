@@ -115,14 +115,10 @@ def study_room(course_code):
                             warning = request.args.get('warning'), success= request.args.get('success'), 
                             alert = request.args.get('alert') )
 
-@app.route("/study-room/logout/<course_code>/<user_email>", methods = ["POST", "GET"])
-def study_room_logout(course_code, user_email):
-    
-    # user_email = request.args.get('user_email')
-    if user_email is None:
-        user_email = session["user_email"]
+@app.route("/study-room/logout/<course_code>", methods = ["POST", "GET"])
+def study_room_logout(course_code): 
 
-    study_room_logout_(course_code, user_email)
+    study_room_logout_(course_code, session["user_email"])
 
     return redirect(url_for("course_details", course_code = course_code))
 
@@ -343,7 +339,7 @@ def checkIdleStudyRoomStudents():
     for course in study_rooms:
         course_code = course["course_code"]
         for student in course["students"]:
-            if (datetime.now() - (student["activity_updated"])).total_seconds() > 15*60:
+            if (datetime.now() - (student["activity_updated"])).total_seconds() > 1*60:
                 study_room_logout_( course_code = course_code, user_email = student["email"])
             
 
@@ -354,6 +350,6 @@ def _zip(*args, **kwargs): #to not overwrite builtin zip in globals
 
 if __name__ == "__main__":
     scheduler = APScheduler()
-    scheduler.add_job(func=checkIdleStudyRoomStudents, trigger='interval', id="checkIdle", seconds=15*60)
+    scheduler.add_job(func=checkIdleStudyRoomStudents, trigger='interval', id="checkIdle", seconds=1*60)
     scheduler.start()
     socketio.run(app, debug=True)

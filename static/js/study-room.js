@@ -242,7 +242,6 @@ $(document).ready(function(){
         let reply_id = $(elem).attr('data-reply')
         let question_id = $(elem).attr('data-question')
         let upvoted_by = user_email
-        console.log(reply_id, question_id, upvoted_by)
         socket.emit('upvote reply', {course_code : course_code,question_id: question_id, reply_id: reply_id, upvoted_by: upvoted_by});
     }
 
@@ -290,7 +289,6 @@ $(document).ready(function(){
             let replied_by = user_email
             
             if(reply.length == 0) return;
-            console.log("reply:", reply)
             
             socket.emit('post reply', {course_code : course_code,question_id: question_id, reply: reply, replied_by: replied_by});
             replyTextArea.value = ""
@@ -373,7 +371,7 @@ $(document).ready(function(){
             window.location.href = redirect_url_logout;
         }
 
-        if(activity_update_time == 15){
+        if(activity_update_time == 1){
             activity_update_time = 0
             socket.emit('active', {course_code:course_code, user_email:user_email} )
         }
@@ -407,13 +405,12 @@ $(document).ready(function(){
     }
 
     socket.on('invitation', function(data) {
-        console.log("invitation")
         meeting_link = data["meeting_link"];
         if (meeting_link.substring(0, 4) != "http"){
             meeting_link = "https://".concat(meeting_link)
         }
         display_alert(data["inviter"] + " invited you for a dicussion on <b>" + data["topic"] +"</b>" 
-        + "<br> <a href='"+meeting_link+"'>Click here to join</a>", "alert")
+        + "<br> <a href='"+meeting_link+"' target='_blank'>Click here to join</a>", "alert")
     });
     
     socket.on('user blocked', function(data) {
@@ -421,7 +418,6 @@ $(document).ready(function(){
     })
 
     socket.on('reported', function(data) {
-        console.log("reported")
         display_alert(data["message"], "warning")
     })
 
@@ -439,7 +435,6 @@ $(document).ready(function(){
     }
 
     socket.on('new question', function(data){
-        console.log("new question")
 
         if(data["course_code"] != course_code )
             return
@@ -481,13 +476,11 @@ $(document).ready(function(){
     });
 
     socket.on('reply blocked', function(data){
-        console.log("reply blocked")
         display_alert("Your reply might be disrespectful to the users.<br> Kindly note that you need to maintain the\
                      decorum of this educational platform", "alert")
     });
 
     socket.on('study room logout', function(data){
-        console.log("study room logout")
         let data_course_code = data['course_code'];
         let user_email = data['email'];
         if(data_course_code === course_code){
@@ -497,17 +490,12 @@ $(document).ready(function(){
     });
 
     socket.on('study room login', function(data){
-        console.log("study room login")
         
         let data_course_code = data['course_code'];
-        console.log(data, course_code)
         
         if(data_course_code == course_code){
-            console.log("-><-")
             let student_new = create_new_student(data["student_email"], data["student_first_name"], data["student_last_name"])
-            console.log("->",student_new)
             let element = document.getElementById('students');
-            console.log(element)
             if ( element !=null){
                     element.appendChild(student_new); 
             }   
