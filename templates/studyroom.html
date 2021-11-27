@@ -11,7 +11,7 @@
 
   <!-- Favicons -->
   <link href="../static/assets/img/logo.png" rel="icon">
-  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../static/assets/img/logo.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -26,7 +26,7 @@
   <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
 
-  <link href="../static/styles/css/style.css" rel="stylesheet">
+  <link href="../static/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
@@ -42,7 +42,7 @@
 
   
   <!-- ======= Hero Section ======= -->
-  <section id="hero" style="background: url('../static/assets/img/Added/library.jpg') top center;
+  <section id="hero" style="background: url('../static/assets/img/library.jpg') top center;
   background-attachment: fixed;
    background-size: cover;
    height: 75vh;" 
@@ -51,7 +51,9 @@
     <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li class="get-started-btn dropdown" style="padding: 10% 30%; font-size: 30px; background-color: white; color: #000;">
-            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            <a href="{{url_for('study_room_logout', course_code = course_code, user_email = user['email'])}}">
+              <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
             <ul>
               <li><a href="{{url_for('study_room_logout', course_code = course_code, user_email = user['email'])}}">Logout</a></li>
             </ul>
@@ -327,9 +329,9 @@
   <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="../static/assets/js/main.js"></script>
+  <script src="../static/js/main.js"></script>
  
-   <script type="text/javascript" src="../static/assets/js/study-room.js"></script>
+   <script type="text/javascript" src="../static/js/study-room.js"></script>
    
 </body>
 

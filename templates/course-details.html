@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Course Details - Mentor Bootstrap Template</title>
+  <title>Course Details - {{course['course_name']}}</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
   <link href="../static/assets/img/logo.png" rel="icon">
-  <link href="../static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../static/assets/img/logo.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -26,7 +26,7 @@
   <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="../static/styles/css/style.css" rel="stylesheet">
+  <link href="../static/css/style.css" rel="stylesheet">
   
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>  
@@ -153,7 +153,7 @@
           <div class="col-md-6 d-flex align-items-stretch" style="padding: 0% 5%;">
             <div class="card">
               <div class="card-img">
-                <img src="../static/assets/img/events-2.jpg" alt="...">
+                <img src="../static/assets/img/lectures-assignments.jpg" alt="...">
               </div>
               <div class="card-body">
                 <h5 class="card-title"><a>Lectures and Assignments</a></h5>
@@ -166,7 +166,7 @@
           <div class="col-md-6 d-flex align-items-stretch" style="padding: 0% 5%;">
             <div class="card">
               <div class="card-img">
-                <img src="../static/assets/img/Added/study-room.jpg" alt="...">
+                <img src="../static/assets/img/study-room.jpg" alt="...">
               </div>
               <div class="card-body">
                 <h5 class="card-title"><a href="{{url_for('study_room', course_code = course['course_code'])}}">Study Room</a></h5>
@@ -188,7 +188,7 @@
             <p style="display: inline;">Course Announcements </p>
           </td>
           <td>
-            <img style="float: right;" class="auto-vanish" src="/static/assets/img/course-details-tab-1.png" width="33%" >
+            <img style="float: right;" class="auto-vanish" src="/static/assets/img/course-details.png" width="33%" >
           </td>
         </tr>
       </table>
@@ -338,8 +338,8 @@
   <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="../static/assets/js/main.js"></script>
-  <script type="text/javascript" src="../static/assets/js/course-announcements.js"></script>
+  <script src="../static/js/main.js"></script>
+  <script type="text/javascript" src="../static/js/course-announcements.js"></script>
   
   {% if alert %}
     <script>
