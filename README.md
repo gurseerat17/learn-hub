@@ -86,7 +86,7 @@ This is how you can enter these details in [MongoDB Compass](https://www.mongodb
 # Resources
 <br />
 
-The [resources](resources/) folder contains important supporting documents to help understand the features better. Also check out this brief demo-video : https://drive.google.com/file/d/1yWktnURSEsWTdtWvp_zcAUkHBppJitTB/view?usp=sharing 
+The [resources](resources/) folder contains important supporting documents to help understand the features better. Also check out this brief demo-video : [Drive link](https://drive.google.com/file/d/1yWktnURSEsWTdtWvp_zcAUkHBppJitTB/view?usp=sharing) or on [You Tube](https://youtu.be/XYDeJjAB0V8)
 
 # Directory Structure
 ```
