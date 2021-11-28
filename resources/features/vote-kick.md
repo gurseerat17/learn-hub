@@ -19,3 +19,7 @@ Multiple spam reports by students in any study room would lead to a votekick acc
     
 ### Case 4 : Total students in study room > 30 :
 `VoteKick if spam_reports > total_students_in_study_room*(1/3) `
+
+<br /> 
+
+A user votekicked out won't be able to enter the study room for the next _6 Hours_ 
