@@ -81,5 +81,52 @@ MongoDB has been used as the database for learn-hub and hosted using MongoDB Atl
   
 This is how you can enter these details in [MongoDB Compass](https://www.mongodb.com/products/compass) and connect to the database : 
 
+<img src="resources/mongoDB/mongodb-connect.png" align= "center" width=45% alt= "resources/mongoDB/mongodb-connect.png"> <img src="resources/mongoDB/mongodb-courses-sample.png" align= "center" width=45% alt = "resources/mongoDB/mongodb-courses-sample.png">
 
-<img src="resources/mongoDB/mongodb-connect.png" align= "center" width=49% alt= "resources/mongoDB/mongodb-connect.png"> <img src="resources/mongoDB/mongodb-courses-sample.png" align= "center" width=49% alt = "resources/mongoDB/mongodb-courses-sample.png">
+# Resources
+<br />
+
+The [resources](resources/) folder contains important supporting documents to help understand the features better. Also check out this brief demo-video : [Drive link](https://drive.google.com/file/d/12GuDhz8_imcAdSxof8_m_09_BcukmdoH/view?usp=sharing) or on [You Tube](https://youtu.be/XYDeJjAB0V8)
+
+Link to all resources : [Supporting Documents](https://drive.google.com/drive/u/0/folders/1kZL9lA1Rr7G19bAcO5NN0C_BOvK60963)
+
+# Directory Structure
+```
+
+├── learn-hub/
+│   ├── learnHub.py
+│   ├── helpers.py
+│   ├── README.md
+│   ├── requirements.txt 
+│   ├── templates/
+│   │   ├── course-details.html
+│   │   ├── courses.html
+│   │   ├── home.html
+│   │   ├── studyroom.html
+│   └── static/
+│       ├── assets/
+│       |   ├── img/
+│       |   └── vendor/
+│       ├── css/
+│       |    └── style.css
+│       └── js/
+│           └── main.css
+│           └── course-announcemnets.css
+│           └── study-room.css
+├── resources/
+│   ├── features/
+│   |   ├── votekick.md
+│   |   └── question-and-replies.md
+│   ├── mongoDB/
+│   |   ├── mongodb-connect.md
+│   |   └── mongodb-courses-sample.md
+│   ├── prototype-screenshots/
+│   |   ├── courses/
+│   |   ├── home/
+│   |   └── studyroom/
+│   |       └── add-questiom/
+│   ├── course-details.md
+│   ├── students.md
+│   └── instructors.md
+└── venv/
+```
