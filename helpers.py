@@ -193,7 +193,7 @@ def reportStudentInStudyRoom(course_code, user_to_report_email, reported_by_emai
     block_message = "You have been blocked out of the study room for the next 12 hours due to multiple spam\
                     reports against you."
  
-    if total_students < 5 :
+    if total_students <= 3 :
         return None, None, False  
     elif total_students < 15 :
         if spam_reports > total_students*(2/3) :

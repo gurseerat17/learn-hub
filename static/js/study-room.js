@@ -363,7 +363,7 @@ $(document).ready(function(){
         activity_update_time = activity_update_time + 1
 
         if (idleTime > 25){
-            display_alert(" You have been inactive for the last 30 minutes <br>\
+            display_alert(" You have been inactive for the last 25 minutes <br>\
                             Confirm your presence by pressing a key or clicking on the page ... " , "alert")
         }
 
