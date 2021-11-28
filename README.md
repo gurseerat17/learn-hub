@@ -52,12 +52,19 @@ Refer to the below mentioned steps to run the application :
 
   You may quit the server by pressing (Ctrl + C)
 
-__Note__ : In case you are running the development server at any other port number, you will need to update the same in `/static/js/study-room.js/ line 81`  and  `/static/js/course-announcements.js/ line 39`
-<br /><br />
+__Note__ : 
+* In case you are running the development server at any other port number, you will need to update the same in [`/static/js/study-room.js/`](static/js/study-room.js/) `line 81`  and  [`/static/js/course-announcements.js/`](static/js/course-announcements.js/) `line 39`
+
+<br />
+
+* Flask-SocketIO has been used to enable real time display of comments, replies and all other sorts of communication supported by this application. Incase of any [disconnection](https://socket.io/docs/v4/troubleshooting-connection-issues/#problem-the-socket-gets-disconnected) (which was never encoutered while testing of the application) , a refresh should re-establish the socket connections. 
+
+<br />
+
 # Database (MongoDB)
 <br />
 
-MongoDB has been used as the database for learn-hub and hosted using MongoDB Atlas. To connect to the databse cluster, either of teh following may be used :
+MongoDB has been used as the database for learn-hub and hosted using MongoDB Atlas. To connect to the databse cluster, either of the following may be used :
 
 * ##### Connection String:
   `
@@ -72,3 +79,5 @@ MongoDB has been used as the database for learn-hub and hosted using MongoDB Atl
   Username : `engage`<br />
   Password : `engage`<br />
   
+This is how you can enter these details in [MongoDB Compass](https://www.mongodb.com/products/compass) and connect to the database : 
+![MongoDb Connect](https://github.com/gurseerat17/learn-hub/tree/main/resources/mongoDB/mongodb-connect.png)
