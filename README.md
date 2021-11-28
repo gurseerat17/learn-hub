@@ -80,4 +80,6 @@ MongoDB has been used as the database for learn-hub and hosted using MongoDB Atl
   Password : `engage`<br />
   
 This is how you can enter these details in [MongoDB Compass](https://www.mongodb.com/products/compass) and connect to the database : 
-![MongoDb Connect](https://github.com/gurseerat17/learn-hub/tree/main/resources/mongoDB/mongodb-connect.png)
+
+<img src="resources/mongoDB/mongodb-connect.png" align= "center" width=49% alt= "resources/mongoDB/mongodb-connect.png">
+<img src="resources/mongoDB/mongodb-courses-sample.png" align= "center" width=49% alt = "resources/mongoDB/mongodb-courses-sample.png">
