@@ -91,8 +91,7 @@ The [resources](resources/) folder contains important supporting documents to he
 Link to all resources : [Supporting Documents](https://drive.google.com/drive/u/0/folders/1kZL9lA1Rr7G19bAcO5NN0C_BOvK60963)
 
 # Directory Structure
-```
-
+``` 
 ├── learn-hub/
 │   ├── learnHub.py
 │   ├── helpers.py
