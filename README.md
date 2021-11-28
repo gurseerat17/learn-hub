@@ -81,5 +81,50 @@ MongoDB has been used as the database for learn-hub and hosted using MongoDB Atl
   
 This is how you can enter these details in [MongoDB Compass](https://www.mongodb.com/products/compass) and connect to the database : 
 
-<img src="resources/mongoDB/mongodb-connect.png" align= "center" width=49% alt= "resources/mongoDB/mongodb-connect.png">
-<img src="resources/mongoDB/mongodb-courses-sample.png" align= "center" width=49% alt = "resources/mongoDB/mongodb-courses-sample.png">
+<img src="resources/mongoDB/mongodb-connect.png" align= "center" width=45% alt= "resources/mongoDB/mongodb-connect.png"> <img src="resources/mongoDB/mongodb-courses-sample.png" align= "center" width=45% alt = "resources/mongoDB/mongodb-courses-sample.png">
+
+# Resources
+<br />
+
+The [resources](resources/) folder contains important supporting documents to help understand the features better. Also check out this brief demo-video : https://drive.google.com/file/d/1yWktnURSEsWTdtWvp_zcAUkHBppJitTB/view?usp=sharing 
+
+# Directory Structure
+```
+
+├── learn-hub/
+│   ├── learnHub.py
+│   ├── helpers.py
+│   ├── README.md
+│   ├── requirements.txt 
+│   ├── templates/
+│   │   ├── course-details.html
+│   │   ├── courses.html
+│   │   ├── home.html
+│   │   ├── studyroom.html
+│   └── static/
+│       ├── assets/
+│       |   ├── img/
+│       |   └── vendor/
+│       ├── css/
+│       |    └── style.css
+│       └── js/
+│           └── main.css
+│           └── course-announcemnets.css
+│           └── study-room.css
+├── resources/
+│   ├── features/
+│   |   ├── votekick.md
+│   |   └── question-and-replies.md
+│   ├── mongoDB/
+│   |   ├── mongodb-connect.md
+│   |   └── mongodb-courses-sample.md
+│   ├── prototype-screenshots/
+│   |   ├── courses/
+│   |   ├── home/
+│   |   └── studyroom/
+│   |       └── add-questiom/
+│   ├── course-details.md
+│   ├── students.md
+│   └── instructors.md
+└── venv/
+```
